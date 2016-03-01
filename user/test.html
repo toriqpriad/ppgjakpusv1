@@ -1,0 +1,65 @@
+
+				<div class="col-xs-12">
+				
+				<div class="panel panel-default">
+				<div class="panel-heading">Detail TPQ</div>
+				<div class="panel-body">
+					<div class="row">
+					
+					<div class="col-md-2">
+					<br>
+					<img src="../images/logo_tpq/'.$getdata_tpq->logo.'" class="img-thumbnail img-responsive" width="300">
+					</div>
+					<div class="col-md-4">
+					<br>
+							<p><h3><b>'.$tpq_user.' - TPQ '.$tpq_nm.'</b></h3></p>
+							<p><strong><h5><i class="fa fa-fw fa-home"></i> Alamat - '.$getdata_tpq->alamat.'</h5></strong></p>
+							<p><strong><h5><i class="fa fa-fw fa-phone"></i> Kontak - '.$getdata_tpq->kontak.'</h5></strong></p>
+							<p><strong><h5><i class="fa fa-fw fa-envelope"></i> Email - '.$getdata_user->email.' </h5></strong></p>
+					</div>
+					
+					<div class="col-md-6">
+						<p class="text-right"><img src="../images/foto_tpq/'.$getdata_tpq->foto.'" class="img-responsive img-thumbnail" width="500"></p>
+					</div>
+					</div>
+					<br>
+					<div class="row">
+					
+					<div class="col-md-6">
+						<div class="form-group">
+						<label>ID TPQ</label>
+						<input type="text" value="'.$getdata_tpq->id_tpq.'"class="form-control" disabled>
+						</div>
+					
+						<div class="form-group">
+						<label>Nama TPQ</label>
+						<input type="text" value="'.$getdata_tpq->nama_tpq.'" class="form-control" disabled>
+						</div>
+					
+						<div class="form-group">
+						<label>Kepala TPQ</label>
+						<input type="text" value="'.$getdata_tpq->kepala_tpq.'" class="form-control" disabled>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+						<label>Pembina TPQ</label>
+						<input type="text" value="'.$getdata_tpq->pembina_tpq.'" class="form-control" disabled>
+						</div>
+					
+						<div class="form-group">
+						<label>Desa</label>
+						<input type="text" value="'.$getdata_tpq->desa.'" class="form-control" disabled>
+						</div>
+					
+						<div class="form-group">
+						<label>Jumlah Kelompok</label>
+						<input type="text" value="'.$getdata_tpq->jml_kelompok.'" class="form-control" disabled>
+						</div>
+					</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+				<a href="?edit='.$getdata_tpq->id_tpq.'" class="btn btn-info"><span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Ubah"></span> Ubah</a>
+				</div>
+				</div>

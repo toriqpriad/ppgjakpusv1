@@ -1,0 +1,288 @@
+<!-- Detail -->
+	<?php
+	function detail(){
+	if (isset($_GET['detail']))
+	{
+	
+	require_once "../db/database.php";
+	
+	$selectdetail = mysql_query("SELECT * FROM data_tpq where id_tpq = '".$_GET['detail']."' ") or die(mysql_error());
+    $selectdetail2 = mysql_fetch_object($selectdetail);
+	
+	echo '
+	
+
+	<div class="panel panel-default">
+	<div class="panel-heading">
+    <h3 class="panel-title">Detail Data TPQ </h3>
+	</div>
+	<div class="panel-body">
+    <div id="content">
+    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a href="#detail_tpq" data-toggle="tab">Detail TPQ</a></li>
+        <li><a href="#logo" data-toggle="tab">Logo TPQ</a></li>
+        <li><a href="#foto" data-toggle="tab">Foto TPQ</a></li>
+		
+        
+    </ul>
+    <div id="my-tab-content" class="tab-content">
+        <div class="tab-pane active" id="detail_tpq">
+		<br>
+        <form id="tab">
+		<div class="form-group">
+        <label>ID TPQ</label>
+        <input type="text" value='.$selectdetail2->id_tpq.' class="form-control" disabled>
+        </div>
+        <div class="form-group">
+        <label>Nama TPQ</label>
+        <input type="text" class="form-control" value="'.$selectdetail2->nama_tpq.'" disabled>
+        </div>
+        <div class="form-group">
+        <label>Kepala TPQ</label>
+        <input type="text" value="'.$selectdetail2->kepala_tpq.'" class="form-control" disabled>
+        </div>
+        <div class="form-group">
+        <label>Pembina TPA</label>
+        <input type="text" value="'.$selectdetail2->pembina_tpq.'" class="form-control" disabled>
+        </div>
+		<div class="form-group">
+        <label>Desa</label>
+        <input type="text" value="'.$selectdetail2->desa.'" class="form-control" disabled>
+        </div>
+        <div class="form-group">
+        <label>Jumlah Kelompok</label>
+        <input type="text" value="'.$selectdetail2->jml_kelompok.'" class="form-control" disabled>
+        </div>
+		
+		<div class="form-group">
+        <label>Kontak</label>
+        <input type="text" value="'.$selectdetail2->kontak.'" class="form-control" disabled>
+        </div>
+
+        <div class="form-group">
+          <label>Alamat</label>
+          <textarea rows="3" class="form-control" disabled>'.$selectdetail2->alamat.'</textarea>
+        </div>      
+        
+      </div>
+	  </form>
+      
+	  <div class="tab-pane" id="logo">
+	  <br>
+            <img src="../images/logo_tpq/'.$selectdetail2->logo.'" class="img-responsive img-thumbnail" style="width:425px; height:300px;">	
+		</div>
+      <div class="tab-pane" id="foto">
+		<br>
+        <img src="../images/foto_tpq/'.$selectdetail2->foto.'" class="img-responsive img-thumbnail" style="width:425px; height:300px;">	
+		</div>
+		
+        </div>
+		</div>
+		</div>
+ 
+ <div class="panel-footer">
+	<a href="?edit='.$selectdetail2->id_tpq.'" class="btn btn-info"><span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Ubah"></span> Ubah</a>
+	<a href="?hapus='.$selectdetail2->id_tpq.'" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true" title="Hapus"></span> Hapus</a>
+	
+	</div>
+	
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("#tabs").tab();
+    });
+</script>    
+</div>
+	
+	
+	
+	';
+	//edit//
+	  }
+	  if (isset($_GET['edit']))
+	{
+	
+	require_once "../db/database.php";
+	$selectedit = mysql_query("SELECT * FROM data_tpq where id_tpq = '".$_GET['edit']."' ") or die(mysql_error());
+    $selectedit2 = mysql_fetch_object($selectedit);
+	echo '
+	
+	
+	<div class="panel panel-default">
+	<div class="panel-heading">
+    <h3 class="panel-title">Detail Data TPQ </h3>
+	</div>
+	<div class="panel-body">
+    <div id="content">
+    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a href="#detail_tpq" data-toggle="tab">Detail TPQ</a></li>
+        <li><a href="#logo" data-toggle="tab">Logo TPQ</a></li>
+        <li><a href="#foto" data-toggle="tab">Foto TPQ</a></li>
+		
+        
+    </ul>
+    <div id="my-tab-content" class="tab-content">
+        <div class="tab-pane active" id="detail_tpq">
+		<br>
+        
+	<div class="form-group">
+		<form  method="post" enctype="multipart/form-data">
+        <label>ID TPQ</label>
+        <input type="text" name="tx_id_tpq"  class="form-control" value='.$selectedit2->id_tpq.' >
+        </div>
+        <div class="form-group">
+        <label>Nama TPA</label>
+        <input type="text" class="form-control" name="tx_nm_tpq" value="'.$selectedit2->nama_tpq.'">
+        </div>
+        <div class="form-group">
+        <label>Kepala TPA</label>
+        <input type="text" name="tx_kpl_tpq" class="form-control" value="'.$selectedit2->kepala_tpq.'">
+        </div>
+        <div class="form-group">
+        <label>Pembina TPA</label>
+        <input type="text" name="tx_pmbn_tpq" class="form-control" value="'.$selectedit2->pembina_tpq.'">
+        </div>
+		<div class="form-group">
+        <label>Desa</label>
+        <input type="text" name="tx_desa" class="form-control" value="'.$selectedit2->desa.'">
+        </div>
+        <div class="form-group">
+        <label>Jumlah Kelompok</label>
+        <input type="text" name="tx_jml_tpq" class="form-control" value='.$selectedit2->jml_kelompok.'>
+        </div>
+
+		<div class="form-group">
+        <label>Kontak</label>
+        <input type="text" name="tx_kontak_tpq" class="form-control" value='.$selectedit2->kontak.'>
+        </div>
+		
+        <div class="form-group">
+          <label>Alamat</label>
+          <textarea rows="3" class="form-control" name="tx_alamat">'.$selectedit2->alamat.'</textarea>
+        </div>
+		</div>
+        
+        <div class="tab-pane" id="logo">
+		<br>
+			<img src="../images/logo_tpq/'.$selectedit2->logo.'" id="gambar_nodin" width="400" alt="Preview Gambar" class="img-thumbnail img-responsive"/>
+			<output id="gambar_nodin"></output>
+			<input type="file" name="Filegambar" id="preview_gambar" class="btn btn-info" value='.$selectedit2->logo.'/>'; ?>
+		<script>
+		function bacaGambar(input) {
+		if (input.files && input.files[0]) {
+		var reader = new FileReader();
+
+		reader.onload = function (e) {
+		
+		$('#gambar_nodin').attr('src', e.target.result);
+		}
+
+		reader.readAsDataURL(input.files[0]);
+		}
+		}
+	</script>
+	<script>
+	$("#preview_gambar").change(function(){
+		bacaGambar(this);
+		});
+	</script> 
+	</div>
+		<?php
+			echo'
+			
+				
+		 <div class="tab-pane" id="foto">
+		 <br>
+			<img src="../images/foto_tpq/'.$selectedit2->foto.'" id="gambar_nodin2" width="400" alt="Preview Gambar" class="img-thumbnail img-responsive"/>
+			<output id="gambar_nodin2"></output>
+			<input type="file" name="Filegambar2" id="preview_gambar2" class="btn btn-info" value='.$selectedit2->foto.'/>'; ?>
+		<script>
+		function bacaGambar2(input) {
+		if (input.files && input.files[0]) {
+		var reader = new FileReader();
+
+		reader.onload = function (e) {
+		
+		$('#gambar_nodin2').attr('src', e.target.result);
+		}
+
+		reader.readAsDataURL(input.files[0]);
+		}
+		}
+	</script>
+	<script>
+	$("#preview_gambar2").change(function(){
+		bacaGambar2(this);
+		});
+	</script> 
+        <?php 
+		echo '
+    </div>
+	</div>
+	</div>
+	</div>
+ <div class="panel-footer">
+	<input type="submit" value="Simpan" name="btn_ubah" class="btn btn-info">
+	</div>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("#tabs").tab();
+    });
+</script>    
+</div>
+</form>	';
+	
+	  
+	  
+	  
+	  if(isset($_POST['btn_ubah']))
+	{
+		
+		$id=$_POST['tx_id_tpq'];
+		$nm=$_POST['tx_nm_tpq'];
+		$nm_tpq=mysql_real_escape_string($nm);
+		$kpl=$_POST['tx_kpl_tpq'];
+		$pbn=$_POST['tx_pmbn_tpq'];
+		$ds=$_POST['tx_desa'];
+		$jml_k=$_POST['tx_jml_tpq'];
+		$kontak=$_POST['tx_kontak_tpq'];
+		$almt=$_POST['tx_alamat'];
+		$logo=$_FILES['Filegambar']['name'];
+		$foto=$_FILES['Filegambar2']['name'];
+		
+		
+		require_once "../db/database.php";
+		if (empty($logo) or  empty($foto))
+		{
+		$isi="Update data_tpq set id_tpq='".$id."' , nama_tpq='".$nm."' , kepala_tpq='".$kpl."', pembina_tpq='".$pbn."',desa='".$ds."', jml_kelompok='".$jml_k."',kontak='".$kontak."', alamat='".$almt."'  WHERE id_tpq = '".$id."'";
+		}
+		elseif (!empty($logo) or !empty($foto))
+		{ 
+		$isi="Update data_tpq set id_tpq='".$id."' , nama_tpq='".$nm."' , kepala_tpq='".$kpl."', pembina_tpq='".$pbn."',desa='".$ds."', jml_kelompok='".$jml_k."',kontak='".$kontak."', alamat='".$almt."', logo='".$logo."', foto='".$foto."'  WHERE id_tpq = '".$id."'";
+		}
+		echo $isi;
+		$sqltambah=mysql_query($isi) or die(mysql_error());
+		$dirlogo="../images/logo_tpq/"; 
+		$dirfoto="../images/foto_tpq/";
+		$logo_data = $dirlogo . basename($_FILES['Filegambar']['name']);
+		$logo_move=move_uploaded_file($_FILES['Filegambar']['tmp_name'], $logo_data);
+		$foto_data = $dirfoto . basename($_FILES['Filegambar2']['name']);
+		$foto_move=move_uploaded_file($_FILES['Filegambar2']['tmp_name'], $foto_data);
+		
+		if($sqltambah) 
+		{		
+			
+		echo "<script type='text/javascript'>alert('Data berhasil diubah');window.location.href='data-tpq.php?detail=$id';</script>";
+		
+		}
+		else 
+		{
+		
+		echo "<script type='text/javascript'>alert('Data gagal diubah')</script>";
+		}
+		}} } 
+		?>
+	  
+
+
+	 
+	
