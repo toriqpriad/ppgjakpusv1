@@ -52,6 +52,18 @@
                 'pdfHtml5'
             ]
         });
+        table_data2 = $('#table_export2').DataTable({
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            responsive: true,
+            processing: true,	    
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
         
     });
 </script>
