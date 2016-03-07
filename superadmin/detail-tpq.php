@@ -192,16 +192,12 @@
                         </div></div>
                     <br>                                
                     <div class="panel-footer">                                    
+                        <a href="data-tpq.php" class="btn btn-warning btn-md"><span class="fa fa-angle-left" aria-hidden="true" title="kembali"></span> Kembali</a>
                         <a href="?edit=<?= $selectdetail2->id_tpq; ?>" class="btn btn-info"><span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Ubah"></span> Ubah</a>
                         <a href="data-tpq.php?hapus=<?= $selectdetail2->id_tpq; ?>" onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true" title="Hapus"></span> Hapus</a>            
 
                     </div>
-                </div>			
-                <script type="text/javascript">
-                    jQuery(document).ready(function ($) {
-                        $("#tabs").tab();
-                    });
-                </script>    
+                </div>			                
                 <?php
             }
         }
@@ -212,228 +208,221 @@
             $selectedit = mysql_query("SELECT * FROM data_tpq inner join user_entry_login on data_tpq.id_tpq=user_entry_login.id_tpq where `data_tpq`.`id_tpq` = '" . $_GET['edit'] . "' ") or die(mysql_error());
             $selectedit2 = mysql_fetch_object($selectedit);
             if ($selectedit2 == false) {
-                echo "Data tidak ditemukan";
-            } else {
-                ?>	
-                <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-                    <li class="active"><a href="#detail_tpq" data-toggle="tab">Detail TPQ</a></li>
-                    <li><a href="#logo" data-toggle="tab">Logo TPQ</a></li>
-                    <li><a href="#foto" data-toggle="tab">Foto TPQ</a></li>	
-                    <li><a href="#musyawarah" data-toggle="tab">Hasil Musyawarah TPQ</a></li>
-                    <li><a href="#kegiatan" data-toggle="tab">Kegiatan TPQ</a></li>		        
-                </ul>
-                <div id="my-tab-content" class="tab-content">
-                    <div class="tab-pane active" id="detail_tpq">
-                        <br>       
-                        <div class="form-group">
-                            <form  method="post" enctype="multipart/form-data">                            
-                                <input type="hidden" name="tx_id_tpq"  class="form-control" value='<?= $selectedit2->id_tpq ?>' >                            
-                                <div class="form-group">
-                                    <label>Nama TPQ</label>
-                                    <input type="text" class="form-control" name="tx_nm_tpq" value="<?= $selectedit2->nama_tpq ?>'">
-                                </div>  
-                                <div class="form-group">
-                                    <label>Kepala TPQ</label>
-                                    <input type="text" name="tx_kpl_tpq" class="form-control" value="<?= $selectedit2->kepala_tpq ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>Pembina TPQ</label>
-                                    <input type="text" name="tx_pmbn_tpq" class="form-control" value="<?= $selectedit2->pembina_tpq ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>Desa</label>
-                                    <input type="text" name="tx_desa" class="form-control" value="<?= $selectedit2->desa ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>Jumlah Kelompok</label>
-                                    <input type="text" name="tx_jml_tpq" class="form-control" value='<?= $selectedit2->jml_kelompok ?>'>
-                                </div>
-                                <div class="form-group">
-                                    <label>Kontak</label>
-                                    <input type="text" name="tx_kontak_tpq" class="form-control" value='<?= $selectedit2->kontak ?>'>
-                                </div>		
-                                <div class="form-group">
-                                    <label>Alamat</label>
-                                    <textarea rows="3" class="form-control" name="tx_alamat"><?= $selectedit2->alamat ?></textarea>
-                                </div>  		
-                                <blockquote><p><h3>Informasi User Entry Login</h3></p></blockquote>
-                                <div class="form-group">
-                                    <label>Username</label>
-                                    <input type="text" name="tx_id_user" class="form-control" value='<?= $selectedit2->id_user ?>' required>
-                                </div>			
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input id="pwd0"  class="form-control" type="password"  name="pass_user" value='<?= $selectedit2->password ?> ' required>			
-                                </div>		
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" name="tx_id_email" class="form-control" value='<?= $selectedit2->email ?> ' required>
-                                </div>		
-                        </div>
+                ?>
+                Data tidak ditemukan 
+            </div>
+            <div class="panel-footer">
+                <a href="detail-tpq.php?detail=<?= $_GET['edit'] ?>" class="btn btn-warning btn-md"><span class="fa fa-angle-left" aria-hidden="true" title="kembali"></span> Kembali</a>
+            </div>
+        <?php } else {
+            ?>	
+            <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                <li class="active"><a href="#detail_tpq" data-toggle="tab">Detail TPQ</a></li>
+                <li><a href="#logo" data-toggle="tab">Logo TPQ</a></li>
+                <li><a href="#foto" data-toggle="tab">Foto TPQ</a></li>	
+                <li><a href="#musyawarah" data-toggle="tab">Hasil Musyawarah TPQ</a></li>
+                <li><a href="#kegiatan" data-toggle="tab">Kegiatan TPQ</a></li>		        
+            </ul>           
+            <div id="my-tab-content" class="tab-content">
+                <div class="tab-pane active" id="detail_tpq">
+                    <br>       
+                    <div id="danger" class="alert alert-danger alert-dismissable" style="display:none"><span id="error_message"></span><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>
+                    <div class="form-group">
+                        <form  method="post" enctype="multipart/form-data">                            
+                            <input type="hidden" name="tx_id_tpq"  class="form-control" value='<?= $selectedit2->id_tpq ?>' >                            
+                            <div class="form-group">
+                                <label>Nama TPQ</label>
+                                <input type="text" class="form-control" name="tx_nm_tpq" value="<?php if (isset($_POST['tx_nm_tpq'])) { echo $_POST['tx_nm_tpq']; } else { echo   $selectedit2->nama_tpq; } ?>">
+                            </div>  
+                            <div class="form-group">
+                                <label>Kepala TPQ</label>
+                                <input type="text" name="tx_kpl_tpq" class="form-control" value="<?php if (isset($_POST['tx_kpl_tpq'])) { echo $_POST['tx_kpl_tpq'];}  else { echo $selectedit2->kepala_tpq ;} ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Pembina TPQ</label>
+                                <input type="text" name="tx_pmbn_tpq" class="form-control" value="<?php if (isset($_POST['tx_pmbn_tpq'])) { echo $_POST['tx_pmbn_tpq']; } else { echo $selectedit2->pembina_tpq;} ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>PC (Pengurus Cabang) </label>
+                                <input type="text" name="tx_desa" class="form-control" value="<?php if (isset($_POST['tx_desa']))  { echo $_POST['tx_desa'];} else { echo $selectedit2->desa; } ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Jumlah PAC (Pengurus Anak Cabang)</label>
+                                <input type="text" name="tx_jml_tpq" class="form-control" value='<?php if (isset($_POST['tx_jml_tpq'])) { echo $_POST['tx_jml_tpq'];} else { echo $selectedit2->jml_kelompok ; } ?>'>
+                            </div>
+                            <div class="form-group">
+                                <label>Kontak</label>
+                                <input type="text" name="tx_kontak_tpq" class="form-control" value='<?php if (isset($_POST['tx_kontak_tpq'])) { echo $_POST['tx_kontak_tpq'];} else { echo  $selectedit2->kontak ; } ?>'>
+                            </div>		
+                            <div class="form-group">
+                                <label>Alamat</label>
+                                <textarea rows="3" class="form-control" name="tx_alamat"><?php if (isset($_POST['tx_alamat'])) { echo  $_POST['tx_alamat']; } else { echo $selectedit2->alamat ;} ?></textarea>
+                            </div>  		
+                            <blockquote><p><h3>Informasi Login</h3></p></blockquote>
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" name="tx_id_user" class="form-control" value='<?php if (isset($_POST['tx_id_user'])) { echo $_POST['tx_id_user'];} else { echo $selectedit2->id_user ;} ?>' required>
+                            </div>			
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input id="pwd0"  class="form-control" type="password"  name="pass_user" value='<?php if  (isset($_POST['pass_user'])) { echo  $_POST['pass_user']; } else { echo  $selectedit2->password; }  ?>' required>			
+                            </div>		
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="tx_id_email" class="form-control" value='<?php if (isset($_POST['tx_id_email'])) { echo  $_POST['tx_id_email']; } else { echo $selectedit2->email ;} ?> ' required>
+                            </div>		
                     </div>
-                    <div class="tab-pane" id="logo">
-                        <br><?php
-                        if (empty($selectedit2->logo) OR ! file_exists($dirlogo . $selectedit2->logo)) {
-                            echo '<img src="../images/logo_tpq/no_img.jpg" class="img-responsive img-thumbnail" style="width:200px; height:200px;">';
-                        } else {
-                            echo '
-                        <img src="../images/logo_tpq/' . $selectedit2->logo . '" class="img-responsive img-thumbnail" style="width:400px; height:420px;">';
-                        }
-                        ?>	
-                        <input type="hidden" name="old_logo" value="' . $selectedit2->logo . '">
-                        <output id="gambar_nodin"></output>
-                        <input type="file" name="Filegambar" id="preview_gambar" class="btn btn-info" value=' . $selectedit2->logo . '/>';
-                        ?>
-                        <script>
-                            function bacaGambar(input) {
-                                if (input.files && input.files[0]) {
-                                    var reader = new FileReader();
-                                    reader.onload = function (e)
-                                    {
-                                        $('#gambar_nodin').attr('src', e.target.result);
-                                    }
-                                    reader.readAsDataURL(input.files[0]);
-                                }
-                            }
-                        </script>
-                        <script>
-                            $("#preview_gambar").change(function () {
-                                bacaGambar(this);
-                            });
-                        </script> 
-                    </div>
-                    <script>
-                        function toggle_password(target) {
-                            var d = document;
-                            var tag = d.getElementById(target);
-                            var tag2 = d.getElementById("showhide");
+                </div>
+                <div class="tab-pane" id="logo">
+                    <br>
+                    <img src="<?php
+                    if (($selectedit2->logo != "") AND ( file_exists($dirlogo . $selectedit2->logo))) {
+                        echo $dirlogo . $selectedit2->logo;
+                    } else {
+                        echo $dirlogo . 'no_img.jpg';
+                    }
+                    ?>"  class="img img-preview img-responsive img-thumbnail" id="gambar_nodin1">
+                    <input type="file" name="Filegambar1" id="preview_gambar1" class="btn btn-default btn-xs"/>
+                    <input type="hidden" name="old_logo" value="<?= $selectedit2->foto_1 ?>"/>
+                    <br>                                                                                        
 
-                            if (tag2.innerHTML == 'Show') {
-                                tag.setAttribute('type', 'text');
-                                tag2.innerHTML = 'Hide';
-                            } else {
-                                tag.setAttribute('type', 'password');
-                                tag2.innerHTML = 'Show';
+                    <script>
+                        function bacaGambar1(input) {
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+
+                                reader.onload = function (e) {
+
+                                    $('#gambar_nodin1').attr('src', e.target.result);
+                                }
+
+                                reader.readAsDataURL(input.files[0]);
                             }
                         }
                     </script>
+                    <script>
+                        $("#preview_gambar1").change(function () {
+                            bacaGambar1(this);
+                        });
+                    </script>                    
+                </div>                               
+
+                <div class="tab-pane" id="foto">
+                    <br>
+                    <img src="<?php
+                    if (($selectedit2->foto != "") AND ( file_exists($dirfoto . $selectedit2->foto))) {
+                        echo $dirfoto . $selectedit2->foto;
+                    } else {
+                        echo $dirfoto . 'no_img.jpg';
+                    }
+                    ?>"  class="img img-preview img-responsive img-thumbnail" id="gambar_nodin2">
+                    <input type="file" name="Filegambar2" id="preview_gambar2" class="btn btn-default btn-xs"/>
+                    <input type="hidden" name="old_foto" value="<?= $selectedit2->foto_1 ?>"/>
+                    <br>                                                                                        
+
+                    <script>
+                        function bacaGambar2(input) {
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+
+                                reader.onload = function (e) {
+
+                                    $('#gambar_nodin2').attr('src', e.target.result);
+                                }
+
+                                reader.readAsDataURL(input.files[0]);
+                            }
+                        }
+                    </script>
+                    <script>
+                        $("#preview_gambar2").change(function () {
+                            bacaGambar2(this);
+                        });
+                    </script> 
+                </div>
+                <div class="tab-pane" id="musyawarah">
+                    <br>
                     <?php
+                    $query_musyawarah = mysql_query("SELECT * FROM data_musyawarah a inner join data_tpq b on a.pelaksana_mswrh = b.id_tpq Where a.tipe_mswrh IN ('T') and a.pelaksana_mswrh = '$selectedit2->id_tpq'");
                     ?>
+                    <table class="display nowrap" cellspacing="0" width="100%" id="table_export">    
+                        <thead>
+                        <th>#</th>                    
+                        <th>Judul Musyawarah</th>                                     
+                        <th>Tgl Pelaksanaan</th>                    
+                        <th><center>Aksi</center></th>
+                        </tr>
+                        </thead>
+                        <tbody>            
+                            <?php
+                            $num = 1;
+                            while ($hsl = mysql_fetch_object($query_musyawarah)) {
+                                echo '<td >' . $num . '</td>';
+                                echo '<td ><a href="detail-mswrh-ppg.php?detail=' . $hsl->id_mswrh . '">' . $hsl->judul_mswrh . '</a></td>';
+                                echo '<td >' . $hsl->tgl_dibuat . '</td >';
+                                ?>
+                            <td><center>
+                                <a title="edit" href="detail-mswrh-ppg.php?edit=<?= $hsl->id_mswrh; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit" title="Ganti"></span></a>
+                                <a title="hapus" href="?hapus=<?= $hsl->id_mswrh; ?>" class="btn btn-default btn-sm" onclick='return confirm("Yakin menghapus data ini?")'><span class="glyphicon glyphicon-trash" title="Hapus"></span></a>
+                            </center>
+                            </td>
 
 
-                    <div class="tab-pane" id="foto">
-                        <br><?php
-                        if (empty($selectedit2->foto) OR ! file_exists($dirfoto . $selectedit2->foto)) {
-                            echo '<img src="../images/logo_tpq/no_img.jpg" class="img-responsive img-thumbnail" style="width:200px; height:200px;">';
-                        } else {
-                            echo '
-                        <img src="../images/logo_tpq/' . $selectedit2->foto . '" class="img-responsive img-thumbnail" style="width:400px; height:420px;">';
+                            </tr>					
+
+                            <?php
+                            $num++;
                         }
                         ?>
-                        <input type="hidden" name="old_foto" value="' . $selectedit2->foto . '">
-                        <output id="gambar_nodin2"></output>
-                        <input type="file" name="Filegambar2" id="preview_gambar2" class="btn btn-info" value=' . $selectedit2->foto . '/>';
-                        ?>
-                        <script>
-                            function bacaGambar2(input) {
-                                if (input.files && input.files[0]) {
-                                    var reader = new FileReader();
+                    </table>
 
-                                    reader.onload = function (e) {
-
-                                        $('#gambar_nodin2').attr('src', e.target.result);
-                                    }
-
-                                    reader.readAsDataURL(input.files[0]);
-                                }
-                            }
-                        </script>
-                        <script>
-                            $("#preview_gambar2").change(function () {
-                                bacaGambar2(this);
-                            });
-                        </script> 
-                    </div>
-                    <div class="tab-pane" id="musyawarah">
-                        <?php
-                        $query_musyawarah = mysql_query("SELECT * FROM data_musyawarah a inner join data_tpq b on a.pelaksana_mswrh = b.id_tpq Where a.tipe_mswrh IN ('T') and a.pelaksana_mswrh = '$selectedit2->id_tpq'");
-                        ?>
-                        <table class="display nowrap" cellspacing="0" width="100%" id="table_export">    
-                            <thead>
-                            <th>#</th>                    
-                            <th>Judul Musyawarah</th>                                     
-                            <th>Tgl Pelaksanaan</th>                    
-                            <th><center>Aksi</center></th>
-                            </tr>
-                            </thead>
-                            <tbody>            
-                                <?php
-                                $num = 1;
-                                while ($hsl = mysql_fetch_object($query_musyawarah)) {
-                                    echo '<td >' . $num . '</td>';
-                                    echo '<td ><a href="detail-mswrh-ppg.php?detail=' . $hsl->id_mswrh . '">' . $hsl->judul_mswrh . '</a></td>';
-                                    echo '<td >' . $hsl->tgl_dibuat . '</td >';
-                                    ?>
-                                <td><center>
-                                    <a title="edit" href="detail-mswrh-ppg.php?edit=<?= $hsl->id_mswrh; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit" title="Ganti"></span></a>
-                                    <a title="hapus" href="?hapus=<?= $hsl->id_mswrh; ?>" class="btn btn-default btn-sm" onclick='return confirm("Yakin menghapus data ini?")'><span class="glyphicon glyphicon-trash" title="Hapus"></span></a>
-                                </center>
-                                </td>
-
-
-                                </tr>					
-
-                                <?php
-                                $num++;
-                            }
-                            ?>
-                        </table>
-
-                    </div>
-                    <div class="tab-pane" id="kegiatan">
-                        <?php
-                        $query_kgtn = mysql_query("SELECT * FROM data_kegiatan a inner join data_tpq c on a.pelaksana_kgtn = c.id_tpq and a.pelaksana_kgtn = '$selectedit2->id_tpq    '");
-                        ?>
-                        <table class="display nowrap" cellspacing="0" width="100%" id="table_export2">    
-                            <thead>
-                            <th>#</th>                    
-                            <th>Nama Kegiatan</th>                                
-                            <th>Tgl Kegiatan</th>                    
-                            <th><center>Aksi</center></th>
-                            </tr>
-                            </thead>
-                            <tbody>            
-                                <?php
-                                $num = 1;
-                                while ($hsl = mysql_fetch_object($query_kgtn)) {
-                                    echo '<td >' . $num . '</td>';
-                                    echo '<td ><a href="detail-kgtn-ppg.php?detail=' . $hsl->id_kgtn . '">' . $hsl->nama_kgtn . '</a></td>';
-                                    echo '<td >' . $hsl->tgl_kgtn . '</td >';
-                                    ?>
-                                <td><center>
-                                    <a title="edit" href="detail-kgtn-ppg.php?edit=<?= $hsl->id_kgtn; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit" title="Ganti"></span></a>
-                                    <a title="hapus" href="?hapus=<?= $hsl->id_kgtn; ?>" class="btn btn-default btn-sm" onclick='return confirm("Yakin menghapus data ini?")'><span class="glyphicon glyphicon-trash" title="Hapus"></span></a>
-                                </center>
-                                </td>
-
-
-                                </tr>					
-
-                                <?php
-                                $num++;
-                            }
-                            ?>
-                        </table>
-                    </div>                
                 </div>
+                <div class="tab-pane" id="kegiatan">
+                    <br>
+                    <?php
+                    $query_kgtn = mysql_query("SELECT * FROM data_kegiatan a inner join data_tpq c on a.pelaksana_kgtn = c.id_tpq and a.pelaksana_kgtn = '$selectedit2->id_tpq    '");
+                    ?>
+                    <table class="display nowrap" cellspacing="0" width="100%" id="table_export2">    
+                        <thead>
+                        <th>#</th>                    
+                        <th>Nama Kegiatan</th>                                
+                        <th>Tgl Kegiatan</th>                    
+                        <th><center>Aksi</center></th>
+                        </tr>
+                        </thead>
+                        <tbody>            
+                            <?php
+                            $num = 1;
+                            while ($hsl = mysql_fetch_object($query_kgtn)) {
+                                echo '<td >' . $num . '</td>';
+                                echo '<td ><a href="detail-kgtn-ppg.php?detail=' . $hsl->id_kgtn . '">' . $hsl->nama_kgtn . '</a></td>';
+                                echo '<td >' . $hsl->tgl_kgtn . '</td >';
+                                ?>
+                            <td><center>
+                                <a title="edit" href="detail-kgtn-ppg.php?edit=<?= $hsl->id_kgtn; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit" title="Ganti"></span></a>
+                                <a title="hapus" href="?hapus=<?= $hsl->id_kgtn; ?>" class="btn btn-default btn-sm" onclick='return confirm("Yakin menghapus data ini?")'><span class="glyphicon glyphicon-trash" title="Hapus"></span></a>
+                            </center>
+                            </td>
 
-                <?php
-                ?>
 
-                <div class="panel-footer">
-                    <a href="detail-tpq.php?detail=' . $idedit . '" class="btn btn-warning btn-md"><span class="fa fa-angle-left" aria-hidden="true" title="kembali"></span> Kembali</a>
-                    <button type="submit" name="btn_ubah" class="btn btn-success btn-md" ><i class="fa fa-save"></i>&nbsp;Simpan</button>
-                </div>
+                            </tr>					
+
+                            <?php
+                            $num++;
+                        }
+                        ?>
+                    </table>
+                </div>                
+            </div>
+            </div>
+
+            <?php
+            ?>
+
+            <div class="panel-footer">
+                <a href="detail-tpq.php?detail=' . $idedit . '" class="btn btn-warning btn-md"><span class="fa fa-angle-left" aria-hidden="true" title="kembali"></span> Kembali</a>
+                <button type="submit" name="btn_ubah" class="btn btn-success btn-md" ><i class="fa fa-save"></i>&nbsp;Simpan</button>
+            </div>
 
 
             </form>

@@ -287,6 +287,7 @@
                 $("#preview_gambar1").change(function () {
                     bacaGambar(this);
                 });
+                
                 function bacaGambar2(input) {
                     if (input.files && input.files[0]) {
                         var reader = new FileReader();
@@ -300,6 +301,7 @@
                 $("#preview_gambar2").change(function () {
                     bacaGambar2(this);
                 });
+                
                 function bacaGambar3(input) {
                     if (input.files && input.files[0]) {
                         var reader = new FileReader();
