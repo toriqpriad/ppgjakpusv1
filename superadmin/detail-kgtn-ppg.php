@@ -454,7 +454,7 @@
                 </script>
                 <?php
             }
-            if ($sqltambah == false) {
+            else {
                 ?>
                 <script type="text/javascript">
                     $('#success').removeAttr("style");
