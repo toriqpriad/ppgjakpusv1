@@ -7,6 +7,7 @@ $numrowslihat = mysql_num_rows($query2);
         <!-- <a class="panel-heading">Pengajar <span class="label label-warning">+15</span> </a> -->
     <div class="panel-heading">Keseluruhan Data Pengajar</div>			
     <div class="panel-body">
+        <div id="success" class="alert alert-success alert-dismissable" style="display:none"><span id="success_message"></span><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>
         <table class="display nowrap" cellspacing="0" width="100%" id="table_export">
             <thead>
                 <tr class="warning">
@@ -14,9 +15,6 @@ $numrowslihat = mysql_num_rows($query2);
                     <th>ID</th>
                     <th>Nama</th>
                     <th>Jns Kelamin</th>
-<!--                    <th>Tmp Lahir</th>
-                    <th>Tgl Lahir</th>-->
-<!--                    <th>Status</th>-->
                     <th>TPQ/Desa</th>
                     <th>Kontak</th>
                     <th>Alamat</th>
@@ -90,72 +88,74 @@ function tambah() {
                         <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
                             <li class="active"><a href="#profil" data-toggle="tab">Profil Pengajar</a></li>
                             <li><a href="#foto" data-toggle="tab">Foto Pengajar</a></li>
-
-
                         </ul>
                         <div id="my-tab-content" class="tab-content">
                             <div class="tab-pane active" id="profil">
-
                                 <br>
+                                <div id="danger" class="alert alert-danger alert-dismissable" style="display:none"><span id="error_message"></span><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>
                                 <div class="form-group">
                                     <form  method="post" enctype="multipart/form-data">
                                         <label>ID Pengajar</label>
-                                        <input type="text" name="tx_id_peng"  class="form-control" value="<?php echo autoNumber(); ?>" required>
+                                        <input type="text" name="tx_id_peng"  class="form-control" value="<?php if(isset($_POST['tx_id_peng'])){ echo $_POST['tx_id_peng'];} else { echo autoNumber(); } ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Nama Pengajar</label>
-                                            <input type="text" class="form-control" name='tx_nm_peng' required>
+                                            <input type="text" class="form-control" name='tx_nm_peng' required value="<?php if(isset($_POST['tx_nm_peng'])){ echo $_POST['tx_nm_peng'];} else { echo '';}?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Jenis Kelamin</label>
-                                            <select name="tx_jklmn" class="form-control input-md" required>
-                                                <option value="Pria">Pria</option>
-                                                <option value="SD">Wanita</option>
+                                            <select name="tx_jklmn" class="form-control input-md" required>                                                
+                                                <option value="P" <?php if(isset($_POST['tx_jklmn'])){ if($_POST['tx_jklmn'] == 'P' ) { echo 'selected'; } } ?> >Pria</option>
+                                                <option value="W" <?php if(isset($_POST['tx_jklmn'])){ if($_POST['tx_jklmn'] == 'W' ) { echo 'selected'; } } ?> >Wanita</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Tempat Lahir</label>
-                                            <input type="text" name="tx_tmp_lhr" class="form-control" required>
+                                            <input type="text" name="tx_tmp_lhr" class="form-control" required value="<?php if(isset($_POST['tx_tmp_lhr'])){ echo $_POST['tx_tmp_lhr'];} else { echo '';}?>">
                                         </div>
                                         <div class="form-group">
                                             <label>Tanggal Lahir</label>
-                                            <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd/mm/yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd" required>
-                                                <input class="form-control" size="10" type="text" name="tx_tgl_lhr">
-                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                            </div>
+                                                
+                                                <input class="form-control single-date-picker" size="10" name="tx_tgl_lhr" type="text" value="<?php
+                                                if (isset($_POST['tgl_lhr'])) {
+                                                    echo $_POST['tgl_lhr'];
+                                                } else {
+                                                    echo '';
+                                                }
+                                                ?>" name="tgl_lhr" required placeholder="dd/mm/yyy">
+
                                         </div>
                                         <div class="form-group">
                                             <label>Pendidikan Akhir</label>
                                             <select name="tx_pdkn" class="form-control input-md">
-                                                <option value="SD">SD</option>
-                                                <option value="SMP">SMP</option>
-                                                <option value="SMA">SMA</option>
-                                                <option value="D3">D3</option>
-                                                <option value="S1">S1</option>
-                                                <option value="S2">S2</option>
+                                                <option value="SD" <?php if(isset($_POST['tx_pdkn'])) { if($_POST['tx_pdkn'] == "SD") { echo "selected";}}?>>SD</option>
+                                                <option value="SMP" <?php if(isset($_POST['tx_pdkn'])) { if($_POST['tx_pdkn'] == "SMP") { echo "selected";}}?> >SMP</option>
+                                                <option value="SMA" <?php if(isset($_POST['tx_pdkn'])) { if($_POST['tx_pdkn'] == "SMA") { echo "selected";}}?>>SMA</option>
+                                                <option value="D3" <?php if(isset($_POST['tx_pdkn'])) { if($_POST['tx_pdkn'] == "D3") { echo "selected";}}?>>D3</option>
+                                                <option value="S1" <?php if(isset($_POST['tx_pdkn'])) { if($_POST['tx_pdkn'] == "S1") { echo "selected";}}?>>S1</option>
+                                                <option value="S2" <?php if(isset($_POST['tx_pdkn'])) { if($_POST['tx_pdkn'] == "S2") { echo "selected";}}?>>S2</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" name="tx_ket_pdkn" class="form-control" placeholder="Nama Sekolah/Universitas(Fakultas)">
+                                            <input type="text" name="tx_ket_pdkn" class="form-control" value="<?php if(isset($_POST['tx_ket_pdkn'])){ echo $_POST['tx_ket_pdkn'];} else { echo '';}?>" placeholder="Nama Sekolah/Universitas(Fakultas)">
                                         </div>
                                         <div class="form-group">
                                             <label>Status</label>
                                             <select name="tx_status" class="form-control input-md" required>
-                                                <option value="Pribumi">Pribumi</option>
-                                                <option value="MT">Mubalegh Tugasan</option>
+                                                <option value="Pribumi" <?php if(isset($_POST['tx_status'])) { if($_POST['tx_status'] == "Pribumi") { echo "selected";}}?>>Pribumi</option>
+                                                <option value="MT" <?php if(isset($_POST['tx_status'])) { if($_POST['tx_status'] == "MT") { echo "selected";}}?>>Mubalegh Tugasan</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Pernikahan</label>
                                             <select name="tx_nkh" class="form-control input-md" required>
-                                                <option value="Sudah Menikah">Sudah Menikah</option>
-                                                <option value="Belum Menikah">Belum Menikah</option>
+                                                <option value="Sudah Menikah" <?php if(isset($_POST['tx_nkh'])) { if($_POST['tx_nkh'] == "Sudah Menikah") { echo "selected";}}?>>Sudah Menikah</option>
+                                                <option value="Belum Menikah" <?php if(isset($_POST['tx_nkh'])) { if($_POST['tx_nkh'] == "Belum Menikah") { echo "selected";}}?>>Belum Menikah</option>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label>TPQ/Desa</label>
                                             <div class="input-group-btn">
-
                                                 <select class="form-control input-md" name="tx_tpq" required>
                                                     <?php
                                                     require_once "../db/database.php";
@@ -164,91 +164,61 @@ function tambah() {
                                                     $numrowslihat_kat = mysql_num_rows($query_kat);
                                                     echo $numrowslihat_kat;
                                                     $x = 1;
-                                                    if ($query_kat)
-                                                        while ($x <= $numrowslihat_kat) {
-                                                            while ($hsl_kat = mysql_fetch_object($query_kat)) {
-
-                                                                echo '<option value="' . $hsl_kat->id_tpq . '" >' . $hsl_kat->nama_tpq . ' - ' . $hsl_kat->desa . '</option>';
-                                                                $nmtpq = $hsl_kat->nama_tpq;
-                                                                $x++;
-                                                            }
-                                                        }
+                                                    while ($hsl_kat = mysql_fetch_object($query_kat)) {
+                                                    ?>    
+                                                        <option value=<?=$hsl_kat->id_tpq?> <?php if(isset($_POST['tx_tpq'])) { if($_POST['tx_tpq'] == $hsl_kat->id_tpq ) { echo "selected";}}?> ><?=$hsl_kat->nama_tpq?></option>
+                                                    <?php                                                    
+                                                    $x++;
+                                                    }s                                                        
                                                     ?>
-
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Kelas Ajar</label>
                                             <select name="tx_kls" class="form-control input-md">
-                                                <option value="Caberawit">Caberawit</option>
-                                                <option value="Praremaja">Praremaja</option>
-                                                <option value="Remaja">Remaja</option>
+                                                <option value="Caberawit" <?php if(isset($_POST['tx_kls'])) { if($_POST['tx_kls'] == "Caberawit") { echo "selected";}}?> >Caberawit</option>
+                                                <option value="Praremaja" <?php if(isset($_POST['tx_kls'])) { if($_POST['tx_kls'] == "Praremaja") { echo "selected";}}?>>Praremaja</option>
+                                                <option value="Remaja" <?php if(isset($_POST['tx_kls'])) { if($_POST['tx_kls'] == "Remaja") { echo "selected";}}?>>Remaja</option>
                                             </select>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Kontak</label>
-                                            <input type="text" name="tx_kontak" class="form-control" >
+                                            <input type="number" name="tx_kontak" class="form-control" value="<?php if(isset($_POST['tx_kontak'])){ echo $_POST['tx_kontak'];} else { echo '';}?>">
                                         </div>
 
                                         <div class="form-group">
                                             <label>Alamat</label>
-                                            <textarea rows="3" class="form-control" name="tx_alamat"></textarea>
+                                            <textarea rows="3" class="form-control" name="tx_alamat"><?php if(isset($_POST['tx_alamat'])){ echo $_POST['tx_alamat'];} else { echo '';}?></textarea>
                                         </div>
                                 </div>
 
 
                                 <div class="tab-pane" id="foto">
                                     <br>
-                                    <input type="file" class="btn btn-default" name="Filegambar2" id="filesToUpload2">
+                                    <img src="../images/foto_pengajar/no_img.jpg" id="gambar_nodin1"  alt="Preview Gambar" class="img-thumbnail img-responsive img-preview"/>                                                                                        
                                     <br>
-
-                                    <output id="filesInfo2"></output>
-
-
+                                    <input type="file" name="img_1" id="preview_gambar1" class="btn btn-default btn-xs"/>                                    
                                 </div>
-                                <!--- Preview Gambar -->
-                                <script>
-                                    function fileSelect(evt) {
-                                        if (window.File && window.FileReader && window.FileList && window.Blob) {
-                                            var files = evt.target.files;
-                                            var divOne = document.getElementById('filesInfo2');
-                                            var result = '';
-                                            var file;
-                                            for (var i = 0; file = files[i]; i++) {
-                                                // if the file is not an image, continue
-                                                if (!file.type.match('image.*')) {
-                                                    continue;
-                                                }
-
-                                                reader = new FileReader();
-                                                reader.onload = (function (tFile) {
-                                                    return function (evt) {
-                                                        var div = document.createElement('div');
-                                                        divOne.innerHTML = '<img id="img_prev2" style="width: 300px; height: 300px;" src="' + evt.target.result + '" class="img-responsive img-thumbnail" src="no"/>';
-                                                        document.getElementById('filesInfo2').appendChild(div);
-                                                    };
-                                                }(file));
-                                                reader.readAsDataURL(file);
-                                            }
-                                        } else {
-                                            alert('The File APIs are not fully supported in this browser.');
+                            <script>
+                                 function bacaGambar(input) {
+                                    if (input.files && input.files[0]) {
+                                        var reader = new FileReader();
+                                        reader.onload = function (e)
+                                       {
+                                            $('#gambar_nodin1').attr('src', e.target.result);
                                         }
-                                    }
-                                    document.getElementById('filesToUpload2').addEventListener('change', fileSelect, false);
+                                            reader.readAsDataURL(input.files[0]);
+                                        }
+                                        }
+                                            $("#preview_gambar1").change(function () {
+                                            bacaGambar(this);
+                                        });
                                 </script>
-
-                                <script>
-                                    $('input[type=file]').bootstrapFileInput();
-                                    $('.file-inputs').bootstrapFileInput();
-                                </script>
-
                             </div>	
                         </div>
                     </div>	
-
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default btn-md" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Tutup</button>
                         <button type="submit" name="simpan" class="btn btn-success btn-md"><i class="fa fa-save"></i>&nbsp;Simpan</button>
@@ -257,50 +227,103 @@ function tambah() {
                 </div>
             </div>
         </div>
-
+        <style>
+        .img-preview{
+            width: 200px; 
+            height:200px;
+        }
+            
+        </style> 
         <?php
         if (isset($_POST['simpan'])) {
-//            $input = new stdClass()
-            $id = $_POST['tx_id_peng'];
-            $klmn = antiinjection($_POST['tx_jklmn']);
-            $nm_p = antiinjection($_POST['tx_nm_peng']);
-            $tmp_lhr = antiinjection($_POST['tx_tmp_lhr']);
-            $tgl_lhr = antiinjection($_POST['tx_tgl_lhr']);
-            $pdkn = antiinjection($_POST['tx_pdkn']);
-            $pdkn_ket = antiinjection($_POST['tx_ket_pdkn']);
-            $sts_p = antiinjection($_POST['tx_status']);
-            $nkh_p = antiinjection($_POST['tx_nkh']);
-            $tpq_ds = antiinjection($_POST['tx_tpq']);
-            $kls = $_POST['tx_kls'];
-            $kontak = antiinjection($_POST['tx_kontak']);
-            $almt = mysql_escape_string($_POST['tx_alamat']);
-            if (!empty($_FILES['Filegambar2']['tmp_name'])) {
-                $foto = $_FILES['Filegambar2']['name'];
-                $dir_foto = "../images/foto_pengajar/";
-                $ext_foto = end((explode(".", $foto)));
-                $string = preg_replace("/[^A-Za-z0-9 ]/", '', $id);
-                $string = str_ireplace(" ", "_", $string);
-                $foto_name = strtolower($string . "_FOTO" . '.' . $ext_foto);
-            } else {
-                $foto_name = "";
-            }
+            $input = new stdClass();
+            $input->id = $_POST['tx_id_peng'];
+            $input->klmn = antiinjection($_POST['tx_jklmn']);
+            $input->nm_p = antiinjection($_POST['tx_nm_peng']);
+            $input->tmp_lhr = antiinjection($_POST['tx_tmp_lhr']);
+            $input->tgl_lhr = antiinjection($_POST['tx_tgl_lhr']);
+            $input->pdkn = antiinjection($_POST['tx_pdkn']);
+            $input->pdkn_ket = antiinjection($_POST['tx_ket_pdkn']);
+            $input->sts_p = antiinjection($_POST['tx_status']);
+            $input->nkh_p = antiinjection($_POST['tx_nkh']);
+            $input->tpq_ds = antiinjection($_POST['tx_tpq']);
+            $input->kls = $_POST['tx_kls'];
+            $input->kontak = antiinjection($_POST['tx_kontak']);
+            $input->almt = mysql_escape_string($_POST['tx_alamat']);
+            
+            $files_name = $_FILES['img_1']['name'];
+            $files_size = $_FILES['img_1']['size'];
+            $files_ext = $_FILES['img_1']['type'];
+            $files_tmp = $_FILES['img_1']['tmp_name'];
+            $errors = "Terjadi kesalahan : ";            
+            $image_file_type = array('image/gif', 'image/png', 'image/jpg', '');
+            if ($files_tmp != "") {
+                            if (!in_array($files_ext, $image_file_type)) {
+                                $alert = TRUE;
+                                $error_ext = "Ekstensi gambar tidak sesuai dengan yang ditentukan (jpg,png,jpg). ";
+                            } else {
+                                $error_ext = "";
+                            }
+                            if ($files_size > 1000000) {
+                                $alert = TRUE;
+                                $error_size = "Ukuran gambar melebihi maksimal (1 MB). ";
+                            } else {
+                                $error_size = "";
+                            }
+                            if ($files_name != "") {
+                                $nospacename = str_ireplace(" ", "_", $input->id);
+                                $extension = end((explode("/", $files_ext)));
+                                $foto_name = $nospacename . "-" . "foto"  . "." . $extension;
+                            } else {
+                                $foto_name = "";
+                            }
+                        } else {
+                            $foto_name = "";
+                        }    
+                        if (isset($alert)) {
+                            
+                    if ($alert == TRUE) {
+                        $error = '';
+                        $error .= 'Terjadi kesalahan : ';
+                        $error .= $error_ext . $error_size;
+                        echo "<script>$('#danger').removeAttr('style')</script>";
+                        echo "<script>$('#myModal').modal('show')</script>";
+                        echo "<script> var error = '$error' ; $('#error_message').text(error);</script>";
+                        die();
+                    }
+                }            
+            $input->name_foto = $foto_name;
+            
             require_once "../db/database.php";
-            $isi = "INSERT INTO data_pengajar VALUES('$id','$nm_p','$klmn','$tmp_lhr','$tgl_lhr','$pdkn','$pdkn_ket','$sts_p','$nkh_p','$tpq_ds','$kls','$kontak','$almt','$foto_name')";
-            $sqltambah = mysql_query($isi) or die(mysql_error());
-            if (!empty($_FILES['Filegambar2']['tmp_name'])) {
-                $foto_data = $dir_foto . $foto_name;
-                $move_foto = move_uploaded_file($_FILES['Filegambar2']['tmp_name'], $foto_data);
+            $input->isi = "INSERT INTO data_pengajar VALUES('$input->id','$input->nm_p','$input->klmn','$input->tmp_lhr','$input->tgl_lhr','$input->pdkn','$input->pdkn_ket','$input->sts_p','$input->nkh_p','$input->tpq_ds','$input->kls','$input->kontak','$input->almt','$input->name_foto')";
+//            echo $input->isi;exit();
+            $sqltambah = mysql_query($input->isi) or die(mysql_error());
+            
+            function upload_foto($foto_name, $tmp_name, $foto_dir) {
+                    $datafoto = $foto_dir . basename($foto_name);
+                    $movefoto = move_uploaded_file($tmp_name, $datafoto);
             }
-            if ($sqltambah) {
-                ?>
-                <script type="text/javascript">
-                    alert("Data sudah disimpan");
-                    window.location.href = 'detail-pengajar.php?detail=<?php echo $id; ?>';
-                </script>
-                <?php
-            }
-            if (!$sqltambah) {
-                echo '<script type="text/javascript"> 	alert("Data gagal disimpan");	</script>';
+            $dirfoto = "../images/foto_pengajar/";
+            if ($sqltambah == TRUE) {                    
+                    $upload_foto = upload_foto($input->name_foto, $files_tmp, $dirfoto);
+                    ?>
+            
+            <script type="text/javascript">
+                $('#success').removeAttr("style");                
+                $('#success_message').text("Data Berhasil Dimasukkan");                              
+            </script>
+            <meta http-equiv="refresh" content= "1"/>
+            <?php
+            } else {
+            ?>
+            <script type="text/javascript">
+                $('#success').removeAttr("style");
+                $('#success').removeClass("alert-success");
+                $('#success').addClass("alert-danger");
+                $('#success_message').text("Data Gagal Dimasukkan");        
+                $('#table_export').ajax.reload();                
+            </script>
+                    <?php
             }
         }
     }

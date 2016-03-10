@@ -47,14 +47,14 @@
                             <div class="tab-pane active" id="detail_tpq">
                                 <br>
                                 <form id="tab">                                                                    
-                                    <input type="hidden" value='<?= $selectdetail2->id_tpq ?> ' class="form-control" disabled>                                
+                                    <input type="hidden" value='<?= $selectdetail2->id_tpq ?>' class="form-control" disabled>                                
                                     <div class="form-group">
                                         <label>Nama TPQ</label>
-                                        <input type="text" class="form-control" value="<?= $selectdetail2->nama_tpq ?>'" disabled>
+                                        <input type="text" class="form-control" value="<?= $selectdetail2->nama_tpq ?>" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label>Kepala TPQ</label>
-                                        <input type="text" value="<?= $selectdetail2->kepala_tpq ?>'" class="form-control" disabled>
+                                        <input type="text" value="<?= $selectdetail2->kepala_tpq ?>" class="form-control" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label>Pembina TPQ</label>
@@ -71,12 +71,12 @@
 
                                     <div class="form-group">
                                         <label>Kontak</label>
-                                        <input type="text" value="<?= $selectdetail2->kontak ?>'" class="form-control" disabled>
+                                        <input type="text" value="<?= $selectdetail2->kontak ?>" class="form-control" disabled>
                                     </div>
 
                                     <div class="form-group">
                                         <label>Alamat</label>
-                                        <textarea rows="3" class="form-control" disabled><?= $selectdetail2->alamat ?>'</textarea>
+                                        <textarea rows="3" class="form-control" disabled><?= $selectdetail2->alamat ?></textarea>
                                     </div>      
 
                             </div>
@@ -108,12 +108,12 @@
                             </div>
                             <div class="tab-pane" id="foto">
                                 <br> <img src="<?php
-                                if (($selectdetail2->foto != "") AND ( file_exists($dirlogo . $selectdetail2->foto))) {
-                                    echo $dirfoto . $selectdetail2->logo;
+                                if (($selectdetail2->foto != "") AND ( file_exists($dirfoto . $selectdetail2->foto))) {
+                                    echo $dirfoto . $selectdetail2->foto;
                                 } else {
                                     echo $dirfoto . 'no_img.jpg';
                                 }
-                                ?>"  class="img img-preview img-responsive img-thumbnail" id="gambar_nodin1">
+                                ?>"  class="img img-preview-foto img-responsive img-thumbnail" id="gambar_nodin1">
                             </div>		
                             <div class="tab-pane" id="musyawarah">
                                 <br>
@@ -133,12 +133,11 @@
                                         $num = 1;
                                         while ($hsl = mysql_fetch_object($query_musyawarah)) {
                                             echo '<td >' . $num . '</td>';
-                                            echo '<td ><a href="detail-mswrh-ppg.php?detail=' . $hsl->id_mswrh . '">' . $hsl->judul_mswrh . '</a></td>';
+                                            echo '<td ><a href="detail-mswrh-tpq.php?detail=' . $hsl->id_mswrh . '">' . $hsl->judul_mswrh . '</a></td>';
                                             echo '<td >' . $hsl->tgl_dibuat . '</td >';
                                             ?>
                                         <td><center>
-                                            <a title="edit" href="detail-mswrh-ppg.php?edit=<?= $hsl->id_mswrh; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit" title="Ganti"></span></a>
-                                            <a title="hapus" href="?hapus=<?= $hsl->id_mswrh; ?>" class="btn btn-default btn-sm" onclick='return confirm("Yakin menghapus data ini?")'><span class="glyphicon glyphicon-trash" title="Hapus"></span></a>
+                                            <a title="Lihat" href="detail-mswrh-tpq.php?detail=<?= $hsl->id_mswrh; ?>" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-eye-open"></span></a>
                                         </center>
                                         </td>
 
@@ -170,12 +169,11 @@
                                         $num = 1;
                                         while ($hsl = mysql_fetch_object($query_kgtn)) {
                                             echo '<td >' . $num . '</td>';
-                                            echo '<td ><a href="detail-kgtn-ppg.php?detail=' . $hsl->id_kgtn . '">' . $hsl->nama_kgtn . '</a></td>';
+                                            echo '<td ><a href="detail-kgtn-tpq.php?detail=' . $hsl->id_kgtn . '">' . $hsl->nama_kgtn . '</a></td>';
                                             echo '<td >' . $hsl->tgl_kgtn . '</td >';
                                             ?>
                                         <td><center>
-                                            <a title="edit" href="detail-kgtn-tpq.php?<?= $hsl->id_kgtn; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit" title="Ganti"></span></a>
-                                            <a title="hapus" href="?hapus=<?= $hsl->id_kgtn; ?>" class="btn btn-default btn-sm" onclick='return confirm("Yakin menghapus data ini?")'><span class="glyphicon glyphicon-trash" title="Hapus"></span></a>
+                                            <a title="Lihat" href="detail-kgtn-tpq.php?detail=<?= $hsl->id_kgtn; ?>" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-eye-open"></span></a>
                                         </center>
                                         </td>
 
@@ -238,7 +236,7 @@
                                 } else {
                                     echo $selectedit2->nama_tpq;
                                 }
-                                ?>">
+                                ?>" required>
                             </div>  
                             <div class="form-group">
                                 <label>Kepala TPQ</label>
@@ -248,7 +246,7 @@
                                 } else {
                                     echo $selectedit2->kepala_tpq;
                                 }
-                                ?>">
+                                ?>" required>
                             </div>
                             <div class="form-group">
                                 <label>Pembina TPQ</label>
@@ -258,7 +256,7 @@
                                 } else {
                                     echo $selectedit2->pembina_tpq;
                                 }
-                                ?>">
+                                ?>" required>
                             </div>
                             <div class="form-group">
                                 <label>PC (Pengurus Cabang) </label>
@@ -268,7 +266,7 @@
                                 } else {
                                     echo $selectedit2->desa;
                                 }
-                                ?>">
+                                ?>" required>
                             </div>
                             <div class="form-group">
                                 <label>Jumlah PAC (Pengurus Anak Cabang)</label>
@@ -278,17 +276,17 @@
                                 } else {
                                     echo $selectedit2->jml_kelompok;
                                 }
-                                ?>'>
+                                ?>' required>
                             </div>
                             <div class="form-group">
                                 <label>Kontak</label>
-                                <input type="text" name="tx_kontak_tpq" class="form-control" value='<?php
+                                <input type="number" name="tx_kontak_tpq" class="form-control" value='<?php
                                 if (isset($_POST['tx_kontak_tpq'])) {
                                     echo $_POST['tx_kontak_tpq'];
                                 } else {
                                     echo $selectedit2->kontak;
                                 }
-                                ?>'>
+                                ?>' required>
                             </div>		
                             <div class="form-group">
                                 <label>Alamat</label>
@@ -375,7 +373,7 @@
                     } else {
                         echo $dirfoto . 'no_img.jpg';
                     }
-                    ?>"  class="img img-preview img-responsive img-thumbnail" id="gambar_nodin2">
+                    ?>"  class="img img-preview-foto img-responsive img-thumbnail" id="gambar_nodin2">
                     <input type="file" name="file_foto" id="preview_gambar2" class="btn btn-default btn-xs"/>
                     <input type="hidden" name="old_foto" value="<?= $selectedit2->foto ?>"/>
                     <br>                                                                                        
@@ -418,12 +416,11 @@
                             $num = 1;
                             while ($hsl = mysql_fetch_object($query_musyawarah)) {
                                 echo '<td >' . $num . '</td>';
-                                echo '<td ><a href="detail-mswrh-ppg.php?detail=' . $hsl->id_mswrh . '">' . $hsl->judul_mswrh . '</a></td>';
+                                echo '<td ><a href="detail-mswrh-tpq.php?detail=' . $hsl->id_mswrh . '">' . $hsl->judul_mswrh . '</a></td>';
                                 echo '<td >' . $hsl->tgl_dibuat . '</td >';
                                 ?>
-                            <td><center>
-                                <a title="edit" href="detail-mswrh-ppg.php?edit=<?= $hsl->id_mswrh; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit" title="Ganti"></span></a>
-                                <a title="hapus" href="?hapus=<?= $hsl->id_mswrh; ?>" class="btn btn-default btn-sm" onclick='return confirm("Yakin menghapus data ini?")'><span class="glyphicon glyphicon-trash" title="Hapus"></span></a>
+                            <td><center>                                
+                                <a href="detail-mswrh-tpq.php?detail=<?= $hsl->id_mswrh; ?>" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-eye-open"></span></a>                                
                             </center>
                             </td>
 
@@ -455,12 +452,11 @@
                             $num = 1;
                             while ($hsl = mysql_fetch_object($query_kgtn)) {
                                 echo '<td >' . $num . '</td>';
-                                echo '<td ><a href="detail-kgtn-ppg.php?detail=' . $hsl->id_kgtn . '">' . $hsl->nama_kgtn . '</a></td>';
+                                echo '<td ><a href="detail-kgtn-tpq.php?detail=' . $hsl->id_kgtn . '">' . $hsl->nama_kgtn . '</a></td>';
                                 echo '<td >' . $hsl->tgl_kgtn . '</td >';
                                 ?>
                             <td><center>
-                                <a title="edit" href="detail-kgtn-ppg.php?edit=<?= $hsl->id_kgtn; ?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit" title="Ganti"></span></a>
-                                <a title="hapus" href="?hapus=<?= $hsl->id_kgtn; ?>" class="btn btn-default btn-sm" onclick='return confirm("Yakin menghapus data ini?")'><span class="glyphicon glyphicon-trash" title="Hapus"></span></a>
+                                <a  href="detail-kgtn-tpq.php?detail=<?= $hsl->id_kgtn; ?>" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-eye-open"></span></a>
                             </center>
                             </td>
 
@@ -487,7 +483,7 @@
 
             </form>
             <?php
-            if (isset($_POST['btn_ubah'])) {
+            if (isset($_POST['btn_ubah'])) {                
                 $input = new stdClass();
                 $input->id = $_POST['tx_id_tpq'];
                 $input->nm_tpq = antiinjection($_POST['tx_nm_tpq']);
@@ -497,17 +493,6 @@
                 $input->jml_k = antiinjection($_POST['tx_jml_tpq']);
                 $input->kontak = antiinjection($_POST['tx_kontak_tpq']);
                 $input->almt = antiinjection($_POST['tx_alamat']);
-
-//                if (empty($_FILES['Filegambar']['tmp_name'])) {
-//                    $input->logo = $_POST['old_logo'];
-//                } else {
-//                    $input->logo = $_FILES['Filegambar']['name'];
-//                }
-//                if (empty($_FILES['Filegambar2']['tmp_name'])) {
-//                    $input->foto = $_POST['old_foto'];
-//                } else {
-//                    $input->foto = $_FILES['Filegambar2']['name'];
-//                }
                 $old_files = array('', $_POST['old_logo'], $_POST['old_foto']);
 //            print_r($old_files);
                 $files_name = array('', $_FILES['file_logo']['name'], $_FILES['file_foto']['name']);
@@ -519,7 +504,8 @@
                 $files_tmp = array('', $_FILES['file_logo']['tmp_name'], $_FILES['file_foto']['tmp_name']);
 //            print_r($files_tmp);
 //            exit();
-                $errors = "Terjadi kesalahan : ";
+
+
                 $i = 1;
                 $image_file_type = array('image/gif', 'image/png', 'image/jpg', 'image/jpeg', '');
                 while ($i <= 2) {
@@ -527,13 +513,13 @@
                         if ($files_tmp[$i] != "") {
                             if (!in_array($files_ext[$i], $image_file_type)) {
                                 $alert = TRUE;
-                                $error_ext = "Ekstensi foto tidak sesuai dengan yang ditentukan (jpg,png,jpg). ";
+                                $error_ext = "Ekstensi gambar tidak sesuai dengan yang ditentukan (jpg,png,jpg). ";
                             } else {
                                 $error_ext = "";
                             }
                             if ($files_size[$i] > 1000000) {
                                 $alert = TRUE;
-                                $error_size = "Ukuran foto melebihi ukuran yang ditentukan (1 MB). ";
+                                $error_size = "Ukuran gambar melebihi maksimal (1 MB). ";
                             } else {
                                 $error_size = "";
                             }
@@ -551,11 +537,11 @@
                         if ($files_tmp[$i] != "") {
                             if (!in_array($files_ext[$i], $image_file_type)) {
                                 $alert = TRUE;
-                                $error_ext = "Ekstensi foto tidak sesuai dengan yang ditentukan (jpg,png,jpg). ";
+                                $error_ext = "Ekstensi gambar tidak sesuai dengan yang ditentukan (jpg,png,jpg). ";
                             }
                             if ($files_size[$i] > 1000000) {
                                 $alert = TRUE;
-                                $error_size = "Ukuran foto melebihi ukuran yang ditentukan (1 MB). ";
+                                $error_size = "Ukuran gambar melebihi ukuran maksimal (1 MB). ";
                             }
                             if ($files_name[$i] != "") {
                                 $nospacename = str_ireplace(" ", "_", $input->id);
@@ -583,12 +569,6 @@
                 }
                 $input->name_logo = $foto_name[0];
                 $input->name_foto = $foto_name[1];
-//                $ext_logo = end((explode(".", $input->logo)));
-//                $ext_foto = end((explode(".", $input->foto)));
-//                $string = preg_replace("/[^A-Za-z0-9 ]/", '', $input->id);
-//                $string = str_ireplace(" ", "_", $string);
-//                $input->logo = strtolower($string . "_LOGO" . '.' . $ext_logo);
-//                $input->foto = strtolower($string . "_FOTO" . '.' . $ext_foto);
                 $input->id_user = antiinjection($_POST['tx_id_user']);
                 $input->pas = antiinjection(md5($_POST['pass_user']));
                 $input->email = antiinjection($_POST['tx_id_email']);
@@ -598,24 +578,6 @@
                 $sqltambah = mysql_query($isi) or die(mysql_error());
                 $sqllogin = mysql_query($isi_login) or die(mysql_error());
 
-//                if (!empty($_FILES['Filegambar']['tmp_name']) OR ! empty($_FILES['Filegambar2']['tmp_name'])) {
-//                    $dirlogo = "../images/logo_tpq/";
-//                    $dirfoto = "../images/foto_tpq/";
-//                    if (!empty($_FILES['Filegambar']['tmp_name'])) {
-//                        if (file_exists($dirfoto . $_POST['old_logo'])) {
-//                            $deloldlogo = unlink($dirlogo . $_POST['old_logo']);
-//                        }
-//                        $logo_data = $dirlogo . $input->logo;
-//                        $logo_move = move_uploaded_file($_FILES['Filegambar']['tmp_name'], $logo_data);
-//                    }
-//                    if (!empty($_FILES['Filegambar2']['tmp_name'])) {
-//                        if (file_exists($dirfoto . $_POST['old_foto'])) {
-//                            $deloldfoto = unlink($dirfoto . $_POST['old_foto']);
-//                        }
-//                        $foto_data = $dirfoto . $input->foto;
-//                        $foto_move = move_uploaded_file($_FILES['Filegambar2']['tmp_name'], $foto_data);
-//                    }
-//                }
                 function upload_foto($foto_name, $tmp_name, $foto_dir) {
                     $datafoto = $foto_dir . basename($foto_name);
                     $movefoto = move_uploaded_file($tmp_name, $datafoto);

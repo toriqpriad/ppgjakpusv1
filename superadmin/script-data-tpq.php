@@ -9,7 +9,7 @@ $numrowslihat = mysql_num_rows($select);
     <!-- <a class="panel-heading">Pengajar <span class="label label-warning">+15</span> </a> -->
     <div class="panel-heading">Keseluruhan Data TPQ </div>		
     <div class="panel-body">
-
+        <div id="success" class="alert alert-success alert-dismissable" style="display:none"><span id="success_message"></span><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>
         <table class="display nowrap" cellspacing="0" width="100%" id="table_export">
             <thead>
                 <tr class="warning">
@@ -94,14 +94,11 @@ function tambah() {
                             <li class="active"><a href="#profil" data-toggle="tab">Profil TPQ</a></li>
                             <li><a href="#logo" data-toggle="tab">Logo TPQ</a></li>
                             <li><a href="#foto" data-toggle="tab">Foto TPQ</a></li>
-
-
-
                         </ul>
                         <div id="my-tab-content" class="tab-content">
                             <div class="tab-pane active" id="profil">
-
                                 <br>
+                                <div id="danger" class="alert alert-danger alert-dismissable" style="display:none"><span id="error_message"></span><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>
                                 <div class="form-group">
                                     <form  method="post" enctype="multipart/form-data">
                                         <label>ID TPQ</label>
@@ -109,225 +106,216 @@ function tambah() {
                                         </div>
                                         <div class="form-group">
                                             <label>Nama TPQ</label>
-                                            <input type="text" class="form-control" name='tx_nm_tpq' required>
+                                            <input type="text" class="form-control" name='tx_nm_tpq' value="<?php if(isset($_POST['tx_nm_tpq'])){ echo $_POST['tx_nm_tpq']; } else { echo '';}?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Kepala TPQ</label>
-                                            <input type="text" name="tx_kpl_tpq" class="form-control" required>
+                                            <input type="text" name="tx_kpl_tpq" class="form-control" value="<?php if(isset($_POST['tx_kpl_tpq'])){ echo $_POST['tx_kpl_tpq']; } else { echo '';}?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Pembina TPQ</label>
-                                            <input type="text" name="tx_pmbn_tpq" class="form-control" required>
+                                            <input type="text" name="tx_pmbn_tpq" class="form-control" required value="<?php if(isset($_POST['tx_pmbn_tpq'])){ echo $_POST['tx_pmbn_tpq']; } else { echo '';}?>">
                                         </div>
                                         <div class="form-group">
-                                            <label>Desa</label>
-                                            <input type="text" name="tx_desa" class="form-control" required>
+                                            <label>PC (Pengurus Cabang)</label>
+                                            <input type="text" name="tx_desa" class="form-control" value="<?php if(isset($_POST['tx_desa'])){ echo $_POST['tx_desa']; } else { echo '';}?>" required>
                                         </div>
                                         <div class="form-group">
-                                            <label>Jumlah Kelompok</label>
-                                            <input type="text" name="tx_jml_tpq" class="form-control" required>
+                                            <label>Jumlah PAC (Pengurus Anak Cabang)</label>
+                                            <input type="text" name="tx_jml_tpq" class="form-control" value="<?php if(isset($_POST['tx_jml_tpq'])){ echo $_POST['tx_jml_tpq']; } else { echo '';}?>" required>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Kontak</label>
-                                            <input type="text" name="tx_kontak_tpq" class="form-control" required>
+                                            <input type="number" name="tx_kontak_tpq" class="form-control" value="<?php if(isset($_POST['tx_kontak_tpq'])){ echo $_POST['tx_kontak_tpq']; } else { echo '';}?>" required>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Alamat</label>
-                                            <textarea rows="3" class="form-control" name="tx_alamat"></textarea>
+                                            <textarea rows="3" class="form-control" name="tx_alamat"><?php if(isset($_POST['tx_alamat'])){ echo $_POST['tx_alamat']; } else { echo '';}?></textarea>
                                         </div>
 
                                         <br>
                                         <blockquote><p><h3>Informasi User Entry Login</h3></p></blockquote>
                                         <div class="form-group">
                                             <label>Username</label>
-                                            <input type="text" name="tx_id_user" class="form-control" value="user_<?php echo autoNumber(); ?>" required>
+                                            <input type="text" name="tx_id_user" class="form-control" value="<?php if(isset($_POST['tx_id_user'])){ echo $_POST['tx_id_user']; } else { echo 'user_'.autonumber();}?>" required>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input id="pwd0"  class="form-control" type="password"  placeholder="Isi Password Login" name="pass_user" required>
-                                            <!--                                            <br>
-                                                                                        <p><a href="#" onclick="toggle_password('pwd0');" id="showhide" class="btn btn-warning btn-sm">Tunjukkan Password</a></p>-->
+                                            <input id="pwd0"  class="form-control" type="password"  placeholder="Isi Password Login" name="pass_user" <?php if(isset($_POST['pass_user'])){ echo $_POST['pass_user']; } else { echo '';}?> required>                                            
                                         </div>
 
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" name="tx_id_email" class="form-control" placeholder="Alamat Email" required>
+                                            <input type="email" name="tx_id_email" class="form-control" placeholder="Alamat Email" required <?php if(isset($_POST['tx_id_email'])){ echo $_POST['tx_id_email']; } else { echo '';}?>>
                                         </div>
-                                </div>
-                                <script>
-                                    function toggle_password(target) {
-                                        var d = document;
-                                        var tag = d.getElementById(target);
-                                        var tag2 = d.getElementById("showhide");
-
-                                        if (tag2.innerHTML == 'Show') {
-                                            tag.setAttribute('type', 'text');
-                                            tag2.innerHTML = 'Hide';
-                                        } else {
-                                            tag.setAttribute('type', 'password');
-                                            tag2.innerHTML = 'Show';
-                                        }
-                                    }
-                                </script>
-
+                                </div>                                
                                 <div class="tab-pane" id="logo">
-                                    <br>
-                                    <input type="file" class="btn btn-default" name="Filegambar" id="filesToUpload">
-                                    <br>
-
-                                    <output id="filesInfo"></output>
-
-
-                                </div>
-                                <!--- Preview Gambar -->
-                                <script>
-                                    function fileSelect(evt) {
-                                        if (window.File && window.FileReader && window.FileList && window.Blob) {
-                                            var files = evt.target.files;
-                                            var divOne = document.getElementById('filesInfo');
-                                            var result = '';
-                                            var file;
-                                            for (var i = 0; file = files[i]; i++) {
-                                                // if the file is not an image, continue
-                                                if (!file.type.match('image.*')) {
-                                                    continue;
-                                                }
-
-                                                reader = new FileReader();
-                                                reader.onload = (function (tFile) {
-                                                    return function (evt) {
-                                                        var div = document.createElement('div');
-                                                        divOne.innerHTML = '<img id="img_prev" style="width: 200px; height:200px" src="' + evt.target.result + '" class="img-responsive img-thumbnail" src="no"/>';
-                                                        document.getElementById('filesInfo').appendChild(div);
-                                                    };
-                                                }(file));
-                                                reader.readAsDataURL(file);
-                                            }
-                                        } else {
-                                            alert('The File APIs are not fully supported in this browser.');
-                                        }
-                                    }
-                                    document.getElementById('filesToUpload').addEventListener('change', fileSelect, false);
-                                </script>
-
-                                <script>
-                                    $('input[type=file]').bootstrapFileInput();
-                                    $('.file-inputs').bootstrapFileInput();
-                                </script>
-
+                                   <br>
+                                   <img src="../images/logo_tpq/no_img.jpg" id="gambar_nodin1"  alt="Preview Gambar" class="img-thumbnail img-responsive img-preview"/>                                                
+                                   <br>
+                                   <input type="file" name="file_logo" id="preview_gambar1" class="btn btn-default btn-xs"/>                                   
+                                </div>                                
                                 <div class="tab-pane" id="foto">
-                                    <br>
-                                    <input type="file" class="btn btn-default" name="Filegambar2" id="filesToUpload2">
-                                    <br>
-
-                                    <output id="filesInfo2"></output>
-
-
-                                </div>
-                                <!--- Preview Gambar -->
-                                <script>
-                                    function fileSelect(evt) {
-                                        if (window.File && window.FileReader && window.FileList && window.Blob) {
-                                            var files = evt.target.files;
-                                            var divOne = document.getElementById('filesInfo2');
-                                            var result = '';
-                                            var file;
-                                            for (var i = 0; file = files[i]; i++) {
-                                                // if the file is not an image, continue
-                                                if (!file.type.match('image.*')) {
-                                                    continue;
-                                                }
-
-                                                reader = new FileReader();
-                                                reader.onload = (function (tFile) {
-                                                    return function (evt) {
-                                                        var div = document.createElement('div');
-                                                        divOne.innerHTML = '<img id="img_prev2" style="width: 100px; height:100px" src="' + evt.target.result + '" class="img-responsive img-thumbnail" src="no"/>';
-                                                        document.getElementById('filesInfo2').appendChild(div);
-                                                    };
-                                                }(file));
-                                                reader.readAsDataURL(file);
-                                            }
-                                        } else {
-                                            alert('The File APIs are not fully supported in this browser.');
-                                        }
-                                    }
-                                    document.getElementById('filesToUpload2').addEventListener('change', fileSelect, false);
-                                </script>
-
-                                <script>
-                                    $('input[type=file]').bootstrapFileInput();
-                                    $('.file-inputs').bootstrapFileInput();
-                                </script>
-
-
+                                   <br>
+                                   <img src="../images/foto_tpq/no_img.jpg" id="gambar_nodin2"  alt="Preview Gambar" class="img-thumbnail img-responsive img-preview"/>                                                
+                                   <br>
+                                   <input type="file" name="file_foto" id="preview_gambar2" class="btn btn-default btn-xs"/>
+                                </div>                                
                             </div>	
                         </div>	
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Tutup</button>
-                        <button type="submit" name="simpan" class="btn btn-success btn-lg" ><i class="fa fa-save"></i>&nbsp;Simpan</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Tutup</button>
+                        <button type="submit" name="simpan" class="btn btn-success" ><i class="fa fa-save"></i>&nbsp;Simpan</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        <script type="text/javascript">
-            jQuery(document).ready(function ($) {
-                $("#tabs").tab();
-            });
-        </script>    
-
-
-        <script type="text/javascript">
-            jQuery(document).ready(function ($) {
-                $("#tabs").tab();
-            });
-        </script>    
+        <script>
+        function bacaGambar(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e)
+        {
+        $('#gambar_nodin1').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+        }
+        }
+        $("#preview_gambar1").change(function () {
+        bacaGambar(this);
+        });
+        
+        function bacaGambar2(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e)
+        {
+        $('#gambar_nodin2').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+        }
+        }
+        $("#preview_gambar2").change(function () {
+        bacaGambar2(this);
+        });    
+        </script>
+    
+        <style>
+        .img-preview{
+            width: 350px; 
+            height:300px;
+        }
+            
+        </style>   
 
 
 
         <?php
         if (isset($_POST['simpan'])) {
-            $id = antiinjection($_POST['tx_id_tpq']);
-            $nm = antiinjection($_POST['tx_nm_tpq']);
-            $nm_tpq = antiinjection($nm);
-            $kpl = antiinjection($_POST['tx_kpl_tpq']);
-            $pbn = antiinjection($_POST['tx_pmbn_tpq']);
-            $ds = antiinjection($_POST['tx_desa']);
-            $jml_k = antiinjection($_POST['tx_jml_tpq']);
-            $kontak = antiinjection($_POST['tx_kontak_tpq']);
-            $almt = mysql_escape_string($_POST['tx_alamat']);
-            $logo = $_FILES['Filegambar']['name'];
-            $foto = $_FILES['Filegambar2']['name'];
-            $id_user = antiinjection($_POST['tx_id_user']);
-            $pas = antiinjection(md5($_POST['pass_user']));
-            $email = antiinjection($_POST['tx_id_email']);
-
+            $input = new stdClass();
+            $dirlogo = "../images/logo_tpq/";
+            $dirfoto = "../images/foto_tpq/";
+            $input->id = antiinjection($_POST['tx_id_tpq']);            
+            $input->nm_tpq =  antiinjection($_POST['tx_nm_tpq']);
+            $input->kpl = antiinjection($_POST['tx_kpl_tpq']);
+            $input->pbn = antiinjection($_POST['tx_pmbn_tpq']);
+            $input->ds = antiinjection($_POST['tx_desa']);
+            $input->jml_k = antiinjection($_POST['tx_jml_tpq']);
+            $input->kontak = antiinjection($_POST['tx_kontak_tpq']);
+            $input->almt = mysql_escape_string($_POST['tx_alamat']);            
+            $input->id_user = antiinjection($_POST['tx_id_user']);
+            $input->pas = antiinjection(md5($_POST['pass_user']));
+            $input->email = antiinjection($_POST['tx_id_email']);
+            $files_name = array('', $_FILES['file_logo']['name'], $_FILES['file_foto']['name']);
+//            print_r($files_name);
+            $files_size = array('', $_FILES['file_logo']['size'], $_FILES['file_foto']['size']);
+//            print_r($files_size);
+            $files_ext = array('', $_FILES['file_logo']['type'], $_FILES['file_foto']['type']);
+//            print_r($files_ext);
+            $files_tmp = array('', $_FILES['file_logo']['tmp_name'], $_FILES['file_foto']['tmp_name']);
+//            print_r($files_tmp);
+            $i = 1;
+            $image_file_type = array('image/gif', 'image/png', 'image/jpg', 'image/jpeg', '');
+            while ($i <= 2) {                    
+                        if ($files_tmp[$i] != "") {
+                            if (!in_array($files_ext[$i], $image_file_type)) {
+                                $alert = TRUE;
+                                $error_ext = "Ekstensi gambar tidak sesuai dengan yang ditentukan (jpg,png,jpg). ";
+                            } else {
+                                $error_ext = "";
+                            }
+                            if ($files_size[$i] > 1000000) {
+                                $alert = TRUE;
+                                $error_size = "Ukuran gambar melebihi maksimal (1 MB). ";
+                            } else {
+                                $error_size = "";
+                            }
+                            if ($files_name[$i] != "") {
+                                $nospacename = str_ireplace(" ", "_", $input->id);
+                                $extension = end((explode("/", $files_ext[$i])));
+                                $foto_name[] = $nospacename . "-" . $i . "." . $extension;
+                            } else {
+                                $foto_name[] = "";
+                            }
+                        } else {
+                            $foto_name[] = "";
+                        }                    
+                    
+                    $i++;
+                }
+                 if (isset($alert)) {
+                    if ($alert == TRUE) {
+                        $error = '';
+                        $error .= 'Terjadi kesalahan : ';
+                        $error .= $error_ext . $error_size;
+                        echo "<script>$('#danger').removeAttr('style')</script>";
+                        echo "<script>$('#myModal').modal('show')</script>";
+                        echo "<script> var error = '$error' ; $('#error_message').text(error);</script>";
+                        die();
+                    }
+                }
+            $input->name_logo = $foto_name[0];
+            $input->name_foto = $foto_name[1];
+            
             require_once "../db/database.php";
-            $isi = "INSERT INTO data_tpq VALUES('$id','$nm_tpq','$kpl','$pbn','$ds','$jml_k','$kontak','$almt','$logo','$foto')";
-
-            $sqltambah = mysql_query($isi) or die(mysql_error());
-            $dir_logo = "../images/logo_tpq/";
-            $dir_foto = "../images/foto_tpq/";
-            $logo_data = $dir_logo . basename($_FILES['Filegambar']['name']);
-            $move_logo = move_uploaded_file($_FILES['Filegambar']['tmp_name'], $logo_data);
-            $foto_data = $dir_foto . basename($_FILES['Filegambar2']['name']);
-            $move_foto = move_uploaded_file($_FILES['Filegambar2']['tmp_name'], $foto_data);
-            $user_login_sql = "INSERT INTO user_entry_login values('$id_user','$id','$pas','$email')";
+            $input->isi = "INSERT INTO data_tpq VALUES('$input->id','$input->nm_tpq','$input->kpl','$input->pbn','$input->ds','$input->jml_k','$input->kontak','$input->almt','$input->name_logo','$input->name_foto')";
+            $sqltambah = mysql_query($input->isi) or die(mysql_error());            
+            $user_login_sql = "INSERT INTO user_entry_login values('$input->id_user','$input->id','$input->pas','$input->email')";
             $insert_user_login = mysql_query($user_login_sql) or mysql_error();
-            if ($sqltambah AND $insert_user_login) {
-                echo '<meta http-equiv="refresh" content="0;url=?detail-tpq.php?detail=' . $id . '">';
+            function upload_foto($foto_name, $tmp_name, $foto_dir) {
+                    $datafoto = $foto_dir . basename($foto_name);
+                    $movefoto = move_uploaded_file($tmp_name, $datafoto);
             }
-            if (!$sqltambah) {
-                echo '<script type="text/javascript">alert("Data gagal disimpan");</script>';
+            if ($sqltambah == TRUE && $insert_user_login == TRUE) {
+                    $upload_logo = upload_foto($input->name_logo, $files_tmp[1], $dirlogo);
+                    $upload_foto = upload_foto($input->name_foto, $files_tmp[2], $dirfoto);
+                    ?>
+            
+            <script type="text/javascript">
+                $('#success').removeAttr("style");                
+                $('#success_message').text("Data Berhasil Dimasukkan");                              
+            </script>
+            <meta http-equiv="refresh" content= "1"/>
+            <?php
+            } else {
+            ?>
+            <script type="text/javascript">
+                $('#success').removeAttr("style");
+                $('#success').removeClass("alert-success");
+                $('#success').addClass("alert-danger");
+                $('#success_message').text("Data Gagal Dimasukkan");        
+                $('#table_export').ajax.reload();                
+            </script>
+                    <?php
             }
         }
-    }
+}
     ?>
 
     <?php

@@ -17,7 +17,7 @@
 
                 function detail() {
                     if (isset($_GET['detail'])) {
-                        require_once "../db/database.php";
+                        require_once "../db/database.php";                        
                         $skripdetail = "SELECT * FROM data_musyawarah a inner join data_bidang_ppg b on a.pelaksana_mswrh = b.id_bid Where a.tipe_mswrh IN ('B','P') and a.id_mswrh = '" . $_GET['detail'] . "' ";
                         $selectdetail = mysql_query($skripdetail);
                         $selectdetail2 = mysql_fetch_object($selectdetail);
