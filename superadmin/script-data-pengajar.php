@@ -26,13 +26,12 @@ $numrowslihat = mysql_num_rows($query2);
                 $num = 1;
                 while ($hsl = mysql_fetch_object($query2)) {
                     echo '<tr><td >' . $num . '</td>';
+                    if($hsl->j_klmn == "P") { $klmn = "Pria";} elseif($hsl->j_klmn == "W"){ $klmn = "Wanita";}
                     echo '									
 					<td ><a href="detail-pengajar.php?detail=' . $hsl->id_peng . '">' . $hsl->id_peng . '</a></td>
 					<td >' . $hsl->nm_peng . '</td>
-					<td >' . $hsl->j_klmn . '</td>					
-							
-					<td >' . $hsl->nama_tpq . ' - ' . $hsl->desa . '</td>
-					
+					<td >' . $klmn . '</td>												
+					<td >' . $hsl->nama_tpq . ' - ' . $hsl->desa . '</td>					
 					<td >' . $hsl->kontak_peng . '</td>
 					<td >' . $hsl->alamat_peng . '</td>';
                     ?>
@@ -154,7 +153,7 @@ function tambah() {
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>TPQ/Desa</label>
+                                            <label>TPQ</label>
                                             <div class="input-group-btn">
                                                 <select class="form-control input-md" name="tx_tpq" required>
                                                     <?php
@@ -201,7 +200,7 @@ function tambah() {
                                     <br>
                                     <input type="file" name="img_1" id="preview_gambar1" class="btn btn-default btn-xs"/>                                    
                                 </div>
-                            <script>
+                                <script>
                                  function bacaGambar(input) {
                                     if (input.files && input.files[0]) {
                                         var reader = new FileReader();
@@ -249,14 +248,13 @@ function tambah() {
             $input->tpq_ds = antiinjection($_POST['tx_tpq']);
             $input->kls = $_POST['tx_kls'];
             $input->kontak = antiinjection($_POST['tx_kontak']);
-            $input->almt = mysql_escape_string($_POST['tx_alamat']);
-            
+            $input->almt = mysql_escape_string($_POST['tx_alamat']);            
             $files_name = $_FILES['img_1']['name'];
             $files_size = $_FILES['img_1']['size'];
             $files_ext = $_FILES['img_1']['type'];
             $files_tmp = $_FILES['img_1']['tmp_name'];
             $errors = "Terjadi kesalahan : ";            
-            $image_file_type = array('image/gif', 'image/png', 'image/jpg', '');
+            $image_file_type = array('image/gif', 'image/png', 'image/jpg','image/jpeg', '');
             if ($files_tmp != "") {
                             if (!in_array($files_ext, $image_file_type)) {
                                 $alert = TRUE;
@@ -335,20 +333,25 @@ function tambah() {
         $hapus = "DELETE FROM `data_pengajar` WHERE `id_peng` = '" . $_GET['hapus'] . "'";
         $sqlhapus = mysql_query($hapus);
         if ($sqlhapus) {
-            echo '<script type="text/javascript">alert("Data sudah dihapus")';
-            ?>
-            var table = $('#table_export').DataTable( {
-            ajax: "data.json"
-            } );
-
-            setInterval( function () {
-            table.ajax.reload();
-            }, 30000 );
-            <?php
-            echo '</script>';
+        ?>
+            
+            <script type="text/javascript">
+                $('#success').removeAttr("style");                
+                $('#success_message').text("Data Berhasil Dihapus");                              
+            </script>
+            <meta http-equiv="refresh" content= "1;url=data-pengajar.php"/>
+            
+        <?php
         } else {
-            echo '<script type="text/javascript"> 	alert("Data gagal dihapus!!");	</script>';
-            echo $hapus;
+        ?>
+            <script type="text/javascript">
+                $('#success').removeAttr("style");
+                $('#success').removeClass("alert-success");
+                $('#success').addClass("alert-danger");
+                $('#success_message').text("Data Gagal Dihapus");        
+            </script>
+            <meta http-equiv="refresh" content= "1;url=data-pengajar.php"/>
+        <?php
         }
     }
     ?>		

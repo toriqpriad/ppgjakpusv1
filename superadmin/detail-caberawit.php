@@ -11,358 +11,408 @@
     <div class="main-content">
         <div class="panel panel-default">
             <div class="panel-heading">Detail Data</div>
-            <div class="panel-body"><?php detail(); ?></div>
+            <div class="panel-body">
+                 <style>
+                    .img-preview{
+                        width: 200px; 
+                        height:200px;
+                    }
+
+                </style>
+                <?php detail(); ?>             
+            </div>
             <?php
 
             function detail() {
-                $dirfoto = "../images/foto_cbr/";
-                if (isset($_GET['detail'])) {
-                    require_once "../db/database.php";
-                    //$selectdetail = mysql_query("SELECT * FROM data_pengajar where id_peng = '".$_GET['detail']."' ") or die(mysql_error());
-                    $skripdetail = "SELECT * FROM data_caberawit inner join data_tpq on data_caberawit.tpq_desa=data_tpq.id_tpq where id_cbr='" . $_GET['detail'] . "' ";
-                    $selectdetail = mysql_query($skripdetail);
-                    $selectdetail2 = mysql_fetch_object($selectdetail);
-                    if ($selectdetail2 == false) {
-                        echo "Data tidak ditemukan";
-                        echo '
-                            </div>
-                            <div class="panel-footer">
-                            <a href="data-caberawit.php?lihat-caberawit" class="btn btn-warning btn-md"><span class="fa fa-angle-left" aria-hidden="true" title="kembali"></span> Kembali</a>
-                                </div>
-                        ';
-                    } else {
-                        echo '
-		<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-        <li class="active"><a href="#detail_tpq" data-toggle="tab">Detail Caberawit</a></li>
-        <li><a href="#foto" data-toggle="tab">Foto Caberawit</a></li>
-		
-        
-    </ul>
-    <div id="my-tab-content" class="tab-content">
-        <div class="tab-pane active" id="detail_tpq">
-		<br>
-        <form id="tab">
-		<div class="form-group">
-        <label>ID Caberawit</label>
-        <input type="text" value=' . $selectdetail2->id_cbr . ' class="form-control" disabled>
-        </div>
-        <div class="form-group">
-        <label>Nama Caberawit</label>
-        <input type="text" class="form-control" value="' . $selectdetail2->nm_cbr . '" disabled>
-        </div>
-		<div class="form-group">
-        <label>Jenis Kelamin</label>
-        <input type="text" class="form-control" value="' . $selectdetail2->j_klmn . '" disabled>
-        </div>
-        <div class="form-group">
-        <label>Tempat Lahir</label>
-        <input type="text" value="' . $selectdetail2->tmp_lhr . '" class="form-control" disabled>
-        </div>
-        <div class="form-group">
-        <label>Tanggal Lahir</label>
-        <input type="text" value="' . $selectdetail2->tgl_lhr . '" class="form-control" disabled>
-        </div>
-		<div class="form-group">
-        <label>Pendidikan</label>
-        <input type="text" value="' . $selectdetail2->pdkn . '" class="form-control" disabled>
-		</div>
-		<div class="form-group">
-		<input type="text" value="Kelas ' . $selectdetail2->kls . '" class="form-control" disabled>
-        </div>
-		<div class="form-group">
-		<input type="text" value="' . $selectdetail2->nm_sklh . '" class="form-control" disabled>
-        </div>
-        <div class="form-group">
-        <label>Hobi</label>
-        <input type="text" value="' . $selectdetail2->hobi . '" class="form-control" disabled>
-        </div>
-		
-		<div class="form-group">
-        <label>Bapak</label>
-        <input type="text" value="' . $selectdetail2->bapak . '" class="form-control" disabled>
-        </div>
-		
-		<div class="form-group">
-        <label>Ibu</label>
-        <input type="text" value="' . $selectdetail2->ibu . '" class="form-control" disabled>
-        </div>
-		
-		<div class="form-group">
-        <label>TPQ/Desa</label>
-        <input type="text" value="' . $selectdetail2->tpq_desa . ' - ' . $selectdetail2->nama_tpq . ' - ' . $selectdetail2->desa . ' " class="form-control" disabled>
-        </div>		
-		<div class="form-group">
-        <label>Kontak</label>
-        <input type="text" value="' . $selectdetail2->kontak_cbr . '" class="form-control" disabled>
-        </div>
-        <div class="form-group">
-          <label>Alamat</label>
-          <textarea rows="3" class="form-control" disabled>' . $selectdetail2->alamat_cbr . '</textarea>
-        </div>      
-        
-      </div>
-	  </form>
-      
-      <div class="tab-pane" id="foto">
-		<br>';
-                        if (empty($selectdetail2->foto_cbr) OR ! file_exists($dirfoto . $selectdetail2->foto_cbr)) {
-                            echo '<img src="../images/foto_cbr/noimg.jpg" class="img-responsive img-thumbnail" style="width:300px; height:300px;">';
-                        } else {
-                            echo '
-                            <img src="../images/foto_cbr/' . $selectdetail2->foto_cbr . '" class="img-responsive img-thumbnail" style="width:300px; height:300px;">';
-                        }
-                        echo '</div>
-        </div>
-        </div>
-		<br> <div class="panel-footer">
-';
-                        ?>
-                        <a href="?edit=<?= $selectdetail2->id_cbr; ?>" class="btn btn-info"><span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Ubah"></span> Ubah</a>
-                        <a href="data-pengajar.php?hapus=<?= $selectdetail2->id_cbr; ?>" onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true" title="Hapus"></span> Hapus</a>
-
-                        <?php
-                        echo '
-		</div>
-        	</div>
-		</div>                
-                ';
-                        //edit//
-                    }
+                $dirfoto = "../images/foto_cbr/";                
+                require_once "../db/database.php";
+                if(isset($_GET['detail'])) 
+                {
+                    $id = $_GET['detail'];
                 }
-                if (isset($_GET['edit'])) {
-
-                    require_once "../db/database.php";
-                    $skripedit = "SELECT * FROM data_caberawit inner join data_tpq on data_caberawit.tpq_desa=data_tpq.id_tpq where id_cbr='" . $_GET['edit'] . "' ";
-                    $selectedit = mysql_query($skripedit) or die(mysql_error());
-                    $selectedit2 = mysql_fetch_object($selectedit);
-                    if ($selectedit2 == false) {
-                        echo "Data tidak ditemukan";
-                        echo '
-                            </div>
-                            <div class="panel-footer">
-                            <a href="data-caberawit.php?lihat-caberawit" class="btn btn-warning btn-md"><span class="fa fa-angle-left" aria-hidden="true" title="kembali"></span> Kembali</a>
-                                </div>
-                        ';
-                    } else {
-                        echo '
-	
-	
-	
-   <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-        <li class="active"><a href="#detail_tpq" data-toggle="tab">Detail Pengajar</a></li>
-        <li><a href="#foto" data-toggle="tab">Foto Caberawit</a></li>
-		
-        
-    </ul>
-    <div id="my-tab-content" class="tab-content">
-        <div class="tab-pane active" id="detail_tpq">
-		<br>
-        <form method="post" enctype="multipart/form-data" >
-		<div class="form-group">
-        <label>ID Caberawit</label>
-        <input type="text" value=' . $selectedit2->id_cbr . ' class="form-control" name="tx_id_cbr">
-        </div>
-        <div class="form-group">
-        <label>Nama Caberawit</label>
-        <input type="text" class="form-control" value="' . $selectedit2->nm_cbr . '" name="tx_nm_cbr">
-        </div>
-		<div class="form-group">
-        <label>Jenis Kelamin</label>
-		 <div class="input-group-btn">
-		<select class="form-control input-md" name="jk_kl" >
-		<option value=' . $selectedit2->j_klmn . '>' . $selectedit2->j_klmn . '</option>
-		<option value="Pria">Pria</option>
-		<option value="Wanita">Wanita</option>
-		</select>	
-		</div>
-        </div>
-        <div class="form-group">
-        <label>Tempat Lahir</label>
-        <input type="text" value="' . $selectedit2->tmp_lhr . '" class="form-control" name="tx_tmp_lhr" >
-        </div>
-        <div class="form-group">
-        <label>Tanggal Lahir</label>
-		<div class="input-group date form_date col-md-5" data-date="" data-date-format="dd/mm/yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-         <input class="form-control" size="10" value="' . $selectedit2->tgl_lhr . '" type="text" name="tx_tgl_lhr" >
-		<span class="input-group-addon"><span class="glyphicon glyphicon-calendar">
-		</span></span>
-         </div>
-        </div>
-		<div class="form-group">
-        <label>Pendidikan</label>
-		<select name="tx_pdkn" class="form-control input-md">
-		<option value="' . $selectedit2->pdkn . '">' . $selectedit2->pdkn . '</option> 
-			<option value="TK">TK</option>
-			<option value="SD">SD</option>
-			
-		</select>
-		</div>
-		<div class="form-group">
-		<input type="text" value="' . $selectedit2->kls . '" class="form-control" name="tx_kls">
-        </div>
-		<div class="form-group">
-		<input type="text" value="' . $selectedit2->nm_sklh . '" class="form-control" name="tx_nm_sklh">
-        </div>
-		<div class="form-group">
-        <label>Hobi</label>
-        <input type="text" value="' . $selectedit2->hobi . '" class="form-control" name="tx_hobi" >
-        </div>
-		<div class="form-group">
-        <label>Orang Tua</label>
-		<input type="text" name="bapak" class="form-control" value="' . $selectedit2->bapak . '" >
-        </div>
-		<div class="form-group">
-		<input type="text" name="ibu" class="form-control" value="' . $selectedit2->ibu . '">
-        </div>
-		<div class="form-group">
-        <label>TPQ/Desa</label>
-        <select class="form-control input-md" name="tx_tpq" >
-							
-		<option value=' . $selectedit2->tpq_desa . '>' . $selectedit2->nama_tpq . ' - ' . $selectedit2->desa . ' </option>';
-                        require_once "../db/database.php";
-                        $select_kat = "SELECT * FROM `data_tpq`";
-                        $query_kat = mysql_query($select_kat);
-                        $numrowslihat_kat = mysql_num_rows($query_kat);
-                        $x = 1;
-                        if ($query_kat)
-                            while ($x <= $numrowslihat_kat) {
-                                while ($hsl_kat = mysql_fetch_object($query_kat)) {
-                                    echo '<option value="' . $hsl_kat->id_tpq . '" >' . $hsl_kat->nama_tpq . ' - ' . $hsl_kat->desa . '</option>';
-                                    $nmtpq = $hsl_kat->nama_tpq;
-                                    $x++;
-                                }
-                            }
-                        echo'
-		</select>
-		</div>
-
-		<div class="form-group">
-        <label>Kontak</label>
-        <input type="text" value="' . $selectedit2->kontak_cbr . '" class="form-control" name="tx_kontak">
-        </div>
-		
-        <div class="form-group">
-          <label>Alamat</label>
-          <textarea rows="3" class="form-control" name="alamat" value=' . $selectedit2->alamat_cbr . '>' . $selectedit2->alamat_cbr . '</textarea>
-        </div>      
-        
-      </div>
-        
-        <div class="tab-pane" id="foto">
-		<br>';
-                        if (empty($selectedit2->foto_cbr) OR ! file_exists($dirfoto . $selectedit2->foto_cbr)) {
-                            echo '<img src="../images/foto_cbr/noimg.jpg" class="img-responsive img-thumbnail" style="width:300px; height:300px;">';
-                        } else {
-                            echo '
-                            <img src="../images/foto_cbr/' . $selectedit2->foto_cbr . '" class="img-responsive img-thumbnail" style="width:300px; height:300px;">';
-                        }
-                        echo ' 
-			<output id="gambar_nodin"></output>
-                        <input type="hidden" name="oldfoto" value=' . $selectedit2->foto_cbr . '>
-			<input type="file" name="Filegambar" id="preview_gambar" class="btn btn-info" value=' . $selectedit2->foto_cbr . '/>';
-                        ?>
-                        <script>
-                            function bacaGambar(input) {
-                                if (input.files && input.files[0]) {
-                                    var reader = new FileReader();
-                                    reader.onload = function (e)
-                                    {
-                                        $('#gambar_nodin').attr('src', e.target.result);
-                                    }
-                                    reader.readAsDataURL(input.files[0]);
-                                }
-                            }
-                        </script>
-                        <script>
-                            $("#preview_gambar").change(function () {
-                                bacaGambar(this);
-                            });
-                        </script> 
-                    </div>
+                elseif(isset($_GET['edit'])) {
+                    $id = $_GET['edit'];
+                }
+                $skripdetail = "SELECT * FROM data_caberawit inner join data_tpq on data_caberawit.tpq_desa=data_tpq.id_tpq where id_cbr='" . $id . "' ";
+                $selectdetail = mysql_query($skripdetail);
+                $result = mysql_fetch_object($selectdetail);
+                if ($result == false) {
+                ?>
+                Data tidak ditemukan
                 </div>
-            
-            
-            <?php
-            echo '
-        </div>
-	<div class="panel-footer">
-        <a href="detail-caberawit.php?detail=' . $_GET['edit'] . '" class="btn btn-warning btn-md"><span class="fa fa-angle-left" aria-hidden="true" title="kembali"></span> Kembali</a>
-	<button type="submit" name="btn_ubah" class="btn btn-success btn-md" ><i class="fa fa-save"></i>&nbsp;Simpan</button>
-	</div>        
-        </div>
-        
-	</form>		
-	';
+                <div class="panel-footer">
+                <a href="data-caberawit.php" class="btn btn-warning btn-md"><span class="fa fa-angle-left" aria-hidden="true" title="kembali"></span> Kembali</a>
+                </div>
+                <?php
+                } else {
+                if (isset($_GET['detail'])) {
+                ?>
+                <div id="my-tab-content" class="tab-content">
+                <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                 <li class="active"><a href="#profil" data-toggle="tab">Profil Caberawit</a></li>
+                 <li><a href="#foto" data-toggle="tab">Foto Caberawit</a></li>
+                </ul>
+                <div class="tab-pane active" id="profil">
+                <br>                                    
+                    <div class="form-group">
+                        <label>Nama Caberawit</label>
+                        <input type="text" class="form-control" name='tx_nm_cbr' value="<?=$result->nm_cbr?>" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Jenis Kelamin</label>
+                        <select name="tx_jklmn" class="form-control input-md" disabled>                                                
+                            <option value="P" <?php if($result->j_klmn == 'P' ) { echo 'selected'; }  ?> >Pria</option>
+                            <option value="W" <?php if($result->j_klmn == 'W' ) { echo 'selected'; }  ?> >Wanita</option>
+                        </select>
+                    </div>
+                
+                    <div class="form-group">
+                        <label>Tempat Lahir</label>
+                        <input type="text" name="tx_tmp_lhr" class="form-control"  disabled value="<?=$result->tmp_lhr?>">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tanggal Lahir</label>
+                        <input class="form-control single-date-picker" size="10" name="tx_tgl_lhr" type="text" value="<?=$result->tgl_lhr?>" name="tgl_lhr" disabled >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Pendidikan</label>
+                        <input type="text" name="tx_tmp_lhr" class="form-control"  disabled value="<?=$result->pdkn?> - kelas <?=$result->kls?> - di <?=$result->nm_sklh?>" >
+                    </div>                     
+                                   
+                    <div class="form-group">
+                        <label>Hobi</label>
+                        <input type="text" name="tx_hobi" class="form-control"  value="<?=$result->hobi?>" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                       <label>TPQ </label>                       
+                       <input type="text" name="tpq" class="form-control" value="<?=$result->nama_tpq.' - '.$result->desa?>" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Orang Tua</label>
+                        <input type="text" name="bapak" class="form-control"  value="<?=$result->bapak?><?php if($result->bapak != "" && $result->ibu != "") { echo ' & ';}?><?=$result->ibu?>" disabled>
+                    </div>                                   
+                                    
+                    <div class="form-group">
+                        <label>Kontak</label>
+                        <input type="text" name="tx_kontak" class="form-control" value="<?=$result->kontak_cbr?>" disabled >
+                    </div>
 
-            if (isset($_POST['btn_ubah'])) {
+                    <div class="form-group">
+                        <label>Alamat</label>
+                        <textarea disabled rows="3" class="form-control" name="tx_alamat"><?=$result->alamat_cbr?></textarea>
+                    </div>
+                    </div>                            
+                    
+                    <div class="tab-pane" id="foto">
+                        <br>
+                        <img src="<?php
+                                if (($result->foto_cbr != "") AND ( file_exists($dirfoto . $result->foto_cbr))) {
+                                    echo $dirfoto . $result->foto_cbr;
+                                } else {
+                                    echo $dirfoto . 'no_img.jpg';
+                                }
+                                ?>"  class="img img-preview img-responsive img-thumbnail" id="gambar_nodin1">
+                    </div>                        
+                    </div>	
+                    </div>                
+                <div class="panel-footer">
+                    <a href="data-caberawit.php" class="btn btn-warning btn-md"><span class="fa fa-angle-left" aria-hidden="true" title="kembali"></span> Kembali</a>
+                    <a href="?edit=<?= $result->id_cbr; ?>" class="btn btn-info"><span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Ubah"></span> Ubah</a>
+                    <a href="data-caberawit.php.php?hapus=<?= $result->id_cbr; ?>" onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true" title="Hapus"></span> Hapus</a>            
+                </div>  
+                <?php
+                }                    
+            elseif (isset($_GET['edit'])) {
+                ?>
+                <div id="my-tab-content" class="tab-content">
+                <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                 <li class="active"><a href="#profil" data-toggle="tab">Profil Caberawit</a></li>
+                 <li><a href="#foto" data-toggle="tab">Foto Caberawit</a></li>
+                </ul>
+                <div class="tab-pane active" id="profil">
+                    <br>
+                    <div id="danger" class="alert alert-danger alert-dismissable" style="display:none"><span id="error_message"></span><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>
+                    <div id="success" class="alert alert-success alert-dismissable" style="display:none"><span id="success_message"></span><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>
+                                <form  method="post" enctype="multipart/form-data">                                    
+                                    <div class="form-group">
+                                        <label>Nama Caberawit</label>
+                                        <input type="text" class="form-control" name='tx_nm_cbr' placeholder="Nama" value="<?php if(isset($_POST['tx_nm_cbr'])) { echo $_POST['tx_nm_cbr'];} else { echo $result->nm_cbr; }?>" required>
+                                        <input type="hidden" class="form-control" name='tx_id' value="<?=$result->id_cbr;?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Jenis Kelamin</label>
+                                        <select name="tx_jklmn" class="form-control input-md" required>                                                
+                                                <option value="P" <?php if(isset($_POST['tx_jklmn'])){ if($_POST['tx_jklmn'] == 'P' ) { echo 'selected'; } } else {if($result->j_klmn == "P") { echo 'selected';}}?> >Pria</option>
+                                                <option value="W" <?php if(isset($_POST['tx_jklmn'])){ if($_POST['tx_jklmn'] == 'W' ) { echo 'selected'; } } else {if($result->j_klmn == "W") { echo 'selected';}}?> >Wanita</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tempat Lahir</label>
+                                        <input type="text" name="tx_tmp_lhr" class="form-control" placeholder="Tempat Lahir" required value="<?php if(isset($_POST['tx_tmp_lhr'])) { echo $_POST['tx_tmp_lhr'];} else { echo $result->tmp_lhr; }?>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tanggal Lahir</label>
+                                                
+                                                <input class="form-control single-date-picker" size="10" name="tx_tgl_lhr" type="text" value="<?php
+                                                if (isset($_POST['tgl_lhr'])) {
+                                                    echo $_POST['tgl_lhr'];
+                                                } else {
+                                                    echo $result->tgl_lhr;
+                                                }
+                                                ?>" name="tgl_lhr" required placeholder="dd/mm/yyy">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pendidikan</label>
+                                        <div class='row'>
+                                        <div class='col-lg-2'>
+                                            <div class="form-group">
+                                            <div class="radio">
+                                                <label>
+                                                <input type="radio" name="tx_pdkn" value="TK" <?php if(isset($_POST['tx_pdkn'])) { if($_POST['tx_pdkn'] == "TK") { echo "checked";}} else {if($result->pdkn == "TK") { echo "checked";}}?> id='radioTK'> TK                                        
+                                                </label>
+                                            </div>
+                                            </div>
+                                            <div class="form-group">
+                                            <div class="radio">
+                                                <label>
+                                                <input type="radio" name="tx_pdkn" value="SD" <?php if(isset($_POST['tx_pdkn'])) { if($_POST['tx_pdkn'] == "SD") { echo "checked";}} else {if($result->pdkn == "SD") { echo "checked";}}?> id = 'radioSD'> SD
+                                                </label>
+                                            </div>                  
+                                            </div>
+                                        </div>
+                                        <div class='col-lg-10'>
+                                            <div class="form-group">
+                                            <select name="tx_kls" class="form-control input-md" id="klsTk">
+                                                <option value="0 Kecil" <?php if(isset($_POST['tx_kls'])){ if($_POST['tx_kls'] == "0 Kecil") { echo 'selected';}}else { if($result->kls == "0 Kecil"){ echo "selected";} } ?> >0 Kecil</option>
+                                                <option value="0 Besar" <?php if(isset($_POST['tx_kls'])){ if($_POST['tx_kls'] == "0 Besar") { echo 'selected';}}else { if($result->kls == "0 Besar"){ echo "selected";} } ?> >0 Besar</option>                                            
+                                            </select>
+                                            <select name="tx_kls" class="form-control input-md" id="klsSd">
+                                                <?php for($i = 1;$i < 7;$i++){ if(isset($_POST['tx_kls'])) { if($_POST['tx_kls'] == $i) { echo "<option value='$i' selected>$i</option>"; } } elseif($result->kls == $i){ echo "<option value='$i' selected>$i</option>"; } else { echo "<option value='$i'>$i</option>";} } ?>                                            
+                                            </select>                                        
+                                            </div>
+                                            <div class="form-group">
+                                            <input type="text" name="tx_nm_sklh" class="form-control" placeholder="Nama Sekolah" value="<?php if(isset($_POST['tx_nm_sklh'])) { echo $_POST['tx_nm_sklh'];} else { echo $result->nm_sklh; }?>">
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <script>
+                                        $(document).ready(function(){
+                                            $("#klsTk").hide();
+                                            $("#klsSd").show();
+                                            $('input[type="radio"]').click(function(){
+                                                if($(this).attr("value")=="TK"){                                                    
+                                                        $("#klsTk").show();
+                                                        $("#klsSd").hide();                                                    
+                                                }
+                                                if($(this).attr("value")=="SD"){                                                    
+                                                        $("#klsTk").hide();
+                                                        $("#klsSd").show();                                                    
+                                                }
+                                            });
+                                          if($('#radioTK').attr("checked")){
+                                              $("#klsTk").show();
+                                              $("#klsSd").hide();                                                                                                  
+                                          };  
+                                          if($('#radioSD').attr("checked")){
+                                              $("#klsTk").hide();
+                                              $("#klsSd").show();                                                                                                  
+                                          };  
+                                    });
+                                    </script>                                        
+                                    
+                                    <div class="form-group">
+                                        <label>Hobi</label>
+                                        <input type="text" name="tx_hobi" class="form-control" placeholder="Hobi Caberawit" value="<?php if(isset($_POST['tx_hobi'])) { echo $_POST['tx_hobi'];} else { echo $result->hobi; }?>">
+                                    </div>
+                                    <div class="form-group">
+                                            <label>TPQ </label>
+                                            <div class="input-group-btn">
+                                                <select class="form-control input-md" name="tx_tpq" required>
+                                                    <?php
+                                                    require_once "../db/database.php";
+                                                    $select_kat = "SELECT id_tpq,nama_tpq FROM `data_tpq`";
+                                                    $query_kat = mysql_query($select_kat);
+                                                    $numrowslihat_kat = mysql_num_rows($query_kat);
+                                                    echo $numrowslihat_kat;
+                                                    $x = 1;
+                                                    while ($hsl_kat = mysql_fetch_object($query_kat)) {
+                                                    ?>    
+                                                        <option value=<?=$hsl_kat->id_tpq?> <?php if(isset($_POST['tx_tpq'])) { if($_POST['tx_tpq'] == $hsl_kat->id_tpq ) { echo "selected";}} elseif($result->tpq_desa == $hsl_kat->id_tpq) { echo "selected"; }?> ><?=$hsl_kat->nama_tpq?></option>
+                                                    <?php                                                    
+                                                    $x++;
+                                                    }s                                                        
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    <div class="form-group">
+                                        <label>Orang Tua</label>
+                                        <input type="text" name="bapak" class="form-control" placeholder="Nama Ayah" value="<?php if(isset($_POST['bapak'])) { echo $_POST['bapak'];} else { echo $result->bapak; }?>" >
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="ibu" class="form-control" placeholder="Nama Ibu" value="<?php if(isset($_POST['ibu'])) { echo $_POST['ibu'];} else { echo $result->ibu; }?>" >
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Kontak</label>
+                                        <input type="text" name="tx_kontak" class="form-control" value="<?php if(isset($_POST['tx_kontak'])) { echo $_POST['tx_kontak'];} else { echo $result->kontak; }?>" >
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Alamat</label>
+                                        <textarea rows="3" class="form-control" name="tx_alamat"><?php if(isset($_POST['tx_alamat'])) { echo $_POST['tx_alamat'];} else { echo $result->alamat; }?></textarea>
+                                    </div>
+                            </div>
+                            
+                            <div class="tab-pane" id="foto">
+                                <br>
+                                <img src="<?php
+                                if (($result->foto_cbr != "") AND ( file_exists($dirfoto . $result->foto_cbr))) {
+                                    echo $dirfoto . $result->foto_cbr;
+                                } else {
+                                    echo $dirfoto . 'no_img.jpg';
+                                }
+                                ?>"  class="img img-preview img-responsive img-thumbnail" id="gambar_nodin1">
+                                <br>
+                                    <input type="file" name="img_1" id="preview_gambar1" class="btn btn-default btn-xs"/>                                    
+                                    <input type="hidden" name="old_img_1" value="<?= $result->foto_cbr ?>"/>
+                                </div>
+                                <script>
+                                 function bacaGambar(input) {
+                                    if (input.files && input.files[0]) {
+                                        var reader = new FileReader();
+                                        reader.onload = function (e)
+                                       {
+                                            $('#gambar_nodin1').attr('src', e.target.result);
+                                        }
+                                            reader.readAsDataURL(input.files[0]);
+                                        }
+                                        }
+                                            $("#preview_gambar1").change(function () {
+                                            bacaGambar(this);
+                                        });
+                                </script>
+
+                        </div>	
+                    </div>
+                
+                <div class="panel-footer">
+                    <a href="?detail=<?=$result->id_cbr;?>" class="btn btn-warning btn-md"><span class="fa fa-angle-left" aria-hidden="true" title="kembali"></span> Kembali</a>
+                    <button type="submit" name="simpan" class="btn btn-success btn-md"><i class="fa fa-save"></i>&nbsp;Simpan</button>
+                    </form>
+                </div>                                    
+                <?php    
+                 if (isset($_POST['simpan'])) {
                 $input = new stdClass();
-                $input->id = $_POST['tx_id_cbr'];
-                $input->nm_p = antiinjection($_POST['tx_nm_cbr']);
-                $input->klmn = antiinjection($_POST['jk_kl']);
+                $input->id = antiinjection($_POST['tx_id']);
+                $input->nm = antiinjection($_POST['tx_nm_cbr']);
+                $input->klmn = antiinjection($_POST['tx_jklmn']);
                 $input->tmp_lhr = antiinjection($_POST['tx_tmp_lhr']);
-                $input->tgl_lhr = $_POST['tx_tgl_lhr'];
+                $input->tgl_lhr = antiinjection($_POST['tx_tgl_lhr']);
                 $input->pdkn = antiinjection($_POST['tx_pdkn']);
                 $input->kls = antiinjection($_POST['tx_kls']);
                 $input->sklh = antiinjection($_POST['tx_nm_sklh']);
+                $input->kls = antiinjection($_POST['tx_kls']);
+                $input->hobi = antiinjection($_POST['tx_hobi']);
                 $input->tpq_desa = antiinjection($_POST['tx_tpq']);
                 $input->bapak = antiinjection($_POST['bapak']);
                 $input->ibu = antiinjection($_POST['ibu']);
-                $input->hobi = antiinjection($_POST['tx_hobi']);
-                $input->kontak = $_POST['tx_kontak'];
-                $input->almt = mysql_escape_string($_POST['alamat']);
-                $input->oldfoto = $_POST['oldfoto'];
-                if (empty($_FILES['Filegambar']['tmp_name'])) {
-                    if (empty($input->oldfoto)) {
-                        $input->foto = "";
-                    } else {
-                        $input->foto = $input->oldfoto;
+                $input->kontak = antiinjection($_POST['tx_kontak']);
+                $input->almt = mysql_escape_string($_POST['tx_alamat']);
+                
+                require_once "../db/database.php";                                            
+                $files_name = $_FILES['img_1']['name'];
+                $files_size = $_FILES['img_1']['size'];
+                $files_ext = $_FILES['img_1']['type'];
+                $files_tmp = $_FILES['img_1']['tmp_name'];
+                $old_files = $_POST['old_img_1']; 
+                $errors = "Terjadi kesalahan : ";            
+                $image_file_type = array('image/gif', 'image/png', 'image/jpg','image/jpeg', '');                
+                if ($files_tmp != "") {
+                            if (!in_array($files_ext, $image_file_type)) {
+                                $alert = TRUE;
+                                $error_ext = "Ekstensi gambar tidak sesuai dengan yang ditentukan (jpg,png,jpg). ";
+                            } else {
+                                $error_ext = "";
+                            }
+                            if ($files_size > 1000000) {
+                                $alert = TRUE;
+                                $error_size = "Ukuran gambar melebihi maksimal (1 MB). ";
+                            } else {
+                                $error_size = "";
+                            }
+                            if ($files_name != "") {
+                                $nospacename = str_ireplace(" ", "_", $input->id);
+                                $extension = end((explode("/", $files_ext)));
+                                $foto_name = $nospacename . "-" . "foto"  . "." . $extension;
+                            } else {
+                                $foto_name = $old_files;
+                            }
+                        } else {
+                            $foto_name = $old_files;
+                        }    
+                        if (isset($alert)) {
+                            
+                    if ($alert == TRUE) {
+                        $error = '';
+                        $error .= 'Terjadi kesalahan : ';
+                        $error .= $error_ext . $error_size;
+                        echo "<script>$('#danger').removeAttr('style')</script>";
+                        echo "<script>$('#myModal').modal('show')</script>";
+                        echo "<script> var error = '$error' ; $('#error_message').text(error);</script>";
+                        die();
                     }
-                } else {
-                    $input->foto = $_FILES['Filegambar']['name'];
-                }
-                $input->ext_foto = end((explode(".", $input->foto)));
-                $ext_foto = end((explode(".", $input->foto)));
-                $string = preg_replace("/[^A-Za-z0-9 ]/", '', $input->id);
-                $string = str_ireplace(" ", "_", $string);
-                $input->foto = strtolower($string . "_FOTO" . '.' . $ext_foto);
+                }            
+                $input->name_foto = $foto_name;
+            
                 require_once "../db/database.php";
-//                echo $_FILES['Filegambar']['tmp_name'];die();
-//                echo '<pre>';print_r($input);echo '</pre>';die();   
-                $isi = "Update data_caberawit set id_cbr='" . $input->id . "' , nm_cbr='" . $input->nm_p . "' , j_klmn='" . $input->klmn . "',tmp_lhr='" . $input->tmp_lhr . "', tgl_lhr='" . $input->tgl_lhr . "',pdkn='" . $input->pdkn . "', kls='" . $input->kls . "',nm_sklh='" . $input->sklh . "',hobi='" . $input->hobi . "', tpq_desa='" . $input->tpq_desa . "', bapak='" . $input->bapak . "',bapak='" . $input->ibu . "', kontak_cbr='" . $input->kontak . "', alamat_cbr='" . $input->almt . "',foto_cbr='" . $input->foto . "'  WHERE id_cbr = '" . $input->id . "'";
-
-                $sqltambah = mysql_query($isi) or die(mysql_error());
-
-                if (!empty($_FILES['Filegambar']['tmp_name'])) {
-                    $dirfoto = "../images/foto_cbr/";
-                    if (file_exists($dirfoto . $input->oldfoto)) {
-                        unlink($dirfoto . $input->oldfoto);
+                $input->isi = "Update data_caberawit set id_cbr='" . $input->id . "' , nm_cbr='" . $input->nm . "' , j_klmn='" . $input->klmn . "',tmp_lhr='" . $input->tmp_lhr . "', tgl_lhr='" . $input->tgl_lhr . "',pdkn='" . $input->pdkn . "', kls='" . $input->kls . "',nm_sklh='" . $input->sklh . "',hobi='" . $input->hobi . "', tpq_desa='" . $input->tpq_desa . "', bapak='" . $input->bapak . "',bapak='" . $input->ibu . "', kontak_cbr='" . $input->kontak . "', alamat_cbr='" . $input->almt . "',foto_cbr='" . $input->name_foto . "'  WHERE id_cbr = '" . $input->id . "'";;                        
+                
+              
+                $sqltambah = mysql_query($input->isi) or die(mysql_error());
+//                echo $input->isi;exit();
+                function upload_foto($old_files,$foto_name, $tmp_name, $foto_dir) {
+                    $datafoto = $foto_dir . basename($foto_name);                    
+                    if($old_files != "" and file_exists($foto_dir.$old_files)) {
+                        $deleteold = unlink($foto_dir . $old_files);
                     }
-                    $foto_data = $dirfoto . $input->foto;
-                    $foto_move = move_uploaded_file($_FILES['Filegambar']['tmp_name'], $foto_data);
+                    $movefoto = move_uploaded_file($tmp_name, $datafoto);
                 }
-                echo "<script>alert();</script>";
-                if ($sqltambah) {
-                    echo '<meta http-equiv="refresh" content="0;url=detail-caberawit.php?detail=' . $input->id . '">';
+                
+                $dirfoto = "../images/foto_cbr/";
+                if ($sqltambah == TRUE) {
+                    if($files_tmp != ""){
+                    $upload_foto = upload_foto($old_files,$input->name_foto, $files_tmp, $dirfoto);
+                    }
+                    ?>
+            
+                <script type="text/javascript">
+                $('#success').removeAttr("style");                
+                $('#success_message').text("Data Berhasil Dimasukkan");                              
+                </script>
+                <meta http-equiv="refresh" content= "1"/>
+                <?php
                 } else {
-                    echo "<script type='text/javascript'>alert('Data gagal diubah')</script>";
+                ?>
+                <script type="text/javascript">
+                $('#success').removeAttr("style");
+                $('#success').removeClass("alert-success");
+                $('#success').addClass("alert-danger");
+                $('#success_message').text("Data Gagal Dimasukkan");                 
+                </script>                
+                <?php
                 }
-            }
+            
+            }                 
+
         }
     }
 }
 ?>
-<script type="text/javascript">
-    $('.form_date').datetimepicker({
-        language: 'id',
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-</script>
-
-
 </body></html>		

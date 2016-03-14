@@ -71,7 +71,7 @@
 $(function() {
     $('.single-date-picker').daterangepicker({
         singleDatePicker: true,
-        showDropdowns: true
+        showDropdowns: true,        
     });
 });
 </script>

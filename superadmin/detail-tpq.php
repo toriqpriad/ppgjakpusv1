@@ -192,7 +192,6 @@
                         <a href="data-tpq.php" class="btn btn-warning btn-md"><span class="fa fa-angle-left" aria-hidden="true" title="kembali"></span> Kembali</a>
                         <a href="?edit=<?= $selectdetail2->id_tpq; ?>" class="btn btn-info"><span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Ubah"></span> Ubah</a>
                         <a href="data-tpq.php?hapus=<?= $selectdetail2->id_tpq; ?>" onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true" title="Hapus"></span> Hapus</a>            
-
                     </div>
                 </div>			                
                 <?php
@@ -584,8 +583,12 @@
                 }
 
                 if ($sqltambah == TRUE && $sqllogin == TRUE) {
-                    $upload_logo = upload_foto($input->name_logo, $files_tmp[1], $dirlogo);
+                    if($files_tmp[1] != ""){
+                    $upload_logo = upload_foto($input->name_logo, $files_tmp[1], $dirlogo);                     
+                    }
+                    if($files_tmp[2] != ""){
                     $upload_foto = upload_foto($input->name_foto, $files_tmp[2], $dirfoto);
+                    }
                     ?>
                     <meta http-equiv="refresh" content= "0;URL=?detail=<?= $input->id; ?>"/>
                     <script type="text/javascript">

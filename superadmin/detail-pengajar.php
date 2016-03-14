@@ -99,16 +99,17 @@
                      <div class="tab-pane" id="foto">
                      <br>';
                     if (empty($getimg) OR ! file_exists($dirfoto . $getimg)) {
-                        echo '<img src="../images/foto_pengajar/noimg.jpg" class="img-responsive img-thumbnail" style="width:300px; height:300px;">';
+                        echo '<img src="../images/foto_pengajar/noimg.jpg" class="img img-preview img-responsive img-thumbnail " >';
                     } else {
                         echo '
-                            <img src="../images/foto_pengajar/' . $selectdetail2->foto_peng . '" class="img-responsive img-thumbnail" style="width:300px; height:300px;">';
-                    }
+                            <img src="../images/foto_pengajar/' . $selectdetail2->foto_peng . '" class="img img-preview img-responsive img-thumbnail" >';
+                    }                    
                     echo '</div>';
                     ?>    
                 </div>
             </div>
             <div class="panel-footer">
+                <a href="data-pengajar.php?lihat-pengajar" class="btn btn-warning btn-md"><span class="fa fa-angle-left" aria-hidden="true" title="kembali"></span> Kembali</a>
                 <a href="?edit=<?= $selectdetail2->id_peng; ?>" class="btn btn-info"><span class="glyphicon glyphicon-pencil" aria-hidden="true" title="Ubah"></span> Ubah</a>
                 <a href="data-pengajar.php?hapus=<?= $selectdetail2->id_peng; ?>" onclick="return confirm('Yakin menghapus data ini?')" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true" title="Hapus"></span> Hapus</a>
             </div>
@@ -139,6 +140,7 @@
                             <div class="tab-pane active" id="profil">
                                 <br>
                                 <div id="danger" class="alert alert-danger alert-dismissable" style="display:none"><span id="error_message"></span><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>
+                                <div id="success" class="alert alert-success alert-dismissable" style="display:none"><span id="success_message"></span><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button></div>
                                 <div class="form-group">
                                     <form  method="post" enctype="multipart/form-data">
                                         
@@ -225,7 +227,7 @@
 
                                         <div class="form-group">
                                             <label>Kontak</label>
-                                            <input type="number" name="tx_kontak" class="form-control" value="<?php if(isset($_POST['tx_kontak'])){ echo $_POST['tx_kontak'];} else { echo $selectedit2->kontak_pengajar ;}?>">
+                                            <input type="number" name="tx_kontak" class="form-control" value="<?php if(isset($_POST['tx_kontak'])){ echo $_POST['tx_kontak'];} else { echo $selectedit2->kontak_peng ;}?>">
                                         </div>
 
                                         <div class="form-group">
@@ -239,6 +241,7 @@
                                     <br>
                                     <img src="<?php if (($selectedit2->foto_peng != "") AND ( file_exists($dirfoto . $selectedit2->foto_peng))) { echo $dirfoto . $selectedit2->foto_peng;} else { echo $dirfoto . 'no_img.jpg';} ?>" class="img img-preview img-responsive img-thumbnail" id="gambar_nodin1">
                                     <br><br>
+                                    <input type="hidden" name="old_img_1" value="<?= $selectedit2->foto_peng ?>"/>
                                     <input type="file" name="img_1" id="preview_gambar1" class="btn btn-default btn-xs"/>                                    
                                 </div>
                             <script>
@@ -260,19 +263,9 @@
                         </div>                    
             <div class="panel-footer">
                 <a href="detail-pengajar.php?detail=<?= $idedit ?>" class="btn btn-warning btn-md"><span class="fa fa-angle-left" aria-hidden="true" title="kembali"></span> Kembali</a>
-                <button type="submit" name="btn_ubah" class="btn btn-success btn-md" ><i class="fa fa-save"></i>&nbsp;Simpan</button>
+                <button type="submit" name="simpan" class="btn btn-success btn-md" ><i class="fa fa-save"></i>&nbsp;Simpan</button>
             </div>
-            </form>
-
-                
-                
-        <style>
-        .img-preview{
-            width: 200px; 
-            height:200px;
-        }
-            
-        </style>
+            </form>                                   
             <?php
             if (isset($_POST['simpan'])) {
             $input = new stdClass();
@@ -285,7 +278,7 @@
             $input->pdkn_ket = antiinjection($_POST['tx_ket_pdkn']);
             $input->sts_p = antiinjection($_POST['tx_status']);
             $input->nkh_p = antiinjection($_POST['tx_nkh']);
-            $input->tpq_ds = antiinjection($_POST['tx_tpq']);
+            $input->tpq_desa = antiinjection($_POST['tx_tpq']);
             $input->kls = $_POST['tx_kls'];
             $input->kontak = antiinjection($_POST['tx_kontak']);
             $input->almt = mysql_escape_string($_POST['tx_alamat']);
@@ -294,12 +287,13 @@
             $files_size = $_FILES['img_1']['size'];
             $files_ext = $_FILES['img_1']['type'];
             $files_tmp = $_FILES['img_1']['tmp_name'];
+            $old_files = $_POST['old_img_1'];            
             $errors = "Terjadi kesalahan : ";            
-            $image_file_type = array('image/gif', 'image/png', 'image/jpg', '');
+            $image_file_type = array('image/gif', 'image/png', 'image/jpg', 'image/jpeg','');
             if ($files_tmp != "") {
                             if (!in_array($files_ext, $image_file_type)) {
                                 $alert = TRUE;
-                                $error_ext = "Ekstensi gambar tidak sesuai dengan yang ditentukan (jpg,png,jpg). ";
+                                $error_ext = "Ekstensi gambar tidak sesuai dengan yang ditentukan (jpg,png,jpg).";
                             } else {
                                 $error_ext = "";
                             }
@@ -314,13 +308,12 @@
                                 $extension = end((explode("/", $files_ext)));
                                 $foto_name = $nospacename . "-" . "foto"  . "." . $extension;
                             } else {
-                                $foto_name = "";
+                                $foto_name = $old_files;
                             }
                         } else {
-                            $foto_name = "";
+                            $foto_name = $old_files;
                         }    
-                        if (isset($alert)) {
-                            
+                if (isset($alert)) {                            
                     if ($alert == TRUE) {
                         $error = '';
                         $error .= 'Terjadi kesalahan : ';
@@ -334,18 +327,23 @@
             $input->name_foto = $foto_name;
             
             require_once "../db/database.php";
-            $input->isi = "INSERT INTO data_pengajar VALUES('$input->id','$input->nm_p','$input->klmn','$input->tmp_lhr','$input->tgl_lhr','$input->pdkn','$input->pdkn_ket','$input->sts_p','$input->nkh_p','$input->tpq_ds','$input->kls','$input->kontak','$input->almt','$input->name_foto')";
+            $input->isi = "Update data_pengajar set id_peng='" . $input->id . "' , j_klmn='" . $input->klmn . "',nm_peng='" . $input->nm_p . "' , tmp_lhr='" . $input->tmp_lhr . "', tgl_lhr='" . $input->tgl_lhr . "',pdkn='" . $input->pdkn . "', ket_pdkn='" . $input->pdkn_ket . "',status='" . $input->sts_p . "', pkw='" . $input->nkh_p . "', tpq_desa='" . $input->tpq_desa . "', kelas_ajar='" . $input->kls . "', kontak_peng='" . $input->kontak . "', alamat_peng='" . $input->almt . "',foto_peng='" . $input->name_foto . "'  WHERE id_peng = '" . $input->id . "'";
 //            echo $input->isi;exit();
             $sqltambah = mysql_query($input->isi) or die(mysql_error());
             
-            function upload_foto($foto_name, $tmp_name, $foto_dir) {
+            function upload_foto($old_files,$foto_name, $tmp_name, $foto_dir) {
                     $datafoto = $foto_dir . basename($foto_name);
+                    if($old_files != "") {
+                    $deleteold = unlink($foto_dir . $old_files);
+                    }
                     $movefoto = move_uploaded_file($tmp_name, $datafoto);
             }
             $dirfoto = "../images/foto_pengajar/";
             if ($sqltambah == TRUE) {                    
-                    $upload_foto = upload_foto($input->name_foto, $files_tmp, $dirfoto);
-                    ?>
+                if($files_tmp != ""){
+                    $upload_foto = upload_foto($old_files,$input->name_foto, $files_tmp, $dirfoto);
+                }
+            ?>
             
             <script type="text/javascript">
                 $('#success').removeAttr("style");                
@@ -369,6 +367,13 @@
     }
   }
 ?>
+             <style>
+        .img-preview{
+            width: 200px; 
+            height:200px;
+        }
+            
+        </style>
 <footer>
     <hr>
 
